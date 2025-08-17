@@ -73,9 +73,6 @@ docker-compose logs -f ratel
 docker-compose down
 
 # Stop the Node.js app (Ctrl+C in the terminal running npm run dev)
-
-# Stop and remove volumes (WARNING: deletes all data)
-docker-compose down -v
 ```
 
 ### Rebuild and Restart
