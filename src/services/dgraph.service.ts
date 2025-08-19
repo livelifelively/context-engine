@@ -52,7 +52,7 @@ export class DGraphService {
       // This will need to be adjusted based on Dgraph's GraphQL schema
       const mutation = `
         mutation {
-          add${data['dgraph.type']}(
+          add${data['node_type']}(
             input: [{
               name_id: "${data.name_id}",
               document_type: "${data.document_type}",
@@ -64,7 +64,7 @@ export class DGraphService {
               updatedAt: "${data.updatedAt}"
             }]
           ) {
-            ${data['dgraph.type']} {
+            ${data['node_type']} {
               id
             }
           }
@@ -89,7 +89,7 @@ export class DGraphService {
         throw new Error(`GraphQL errors: ${JSON.stringify(result.errors)}`);
       }
 
-      const uid = result.data[`add${data['dgraph.type']}`][data['dgraph.type']][0].id;
+      const uid = result.data[`add${data['node_type']}`][data['node_type']][0].id;
       return uid;
     } catch (error) {
       throw error;
@@ -127,13 +127,13 @@ export class DGraphService {
       // Convert data to GraphQL mutation
       const mutation = `
         mutation {
-          update${data['dgraph.type']}(
+          update${data['node_type']}(
             input: {
               filter: { id: ["${uid}"] }
               set: ${JSON.stringify(data).replace(/"([^"]+)":/g, '$1:')}
             }
           ) {
-            ${data['dgraph.type']} {
+            ${data['node_type']} {
               id
             }
           }

@@ -1,10 +1,10 @@
 {
-  "dgraph.type": "_System_Document__Documentation_Driven_Development_Methodology_",
+  "node_type": "_System_Document__Documentation_Driven_Development_Methodology_",
   "name_id": "ddd-methodology-v1",
   "document_type": "methodology",
   "title": "Documentation Driven Development",
-  "version": "1.0.0",
-  "description": "This document establishes the Documentation Driven Development (DDD) methodology for software development projects. It defines the principles, structure, and implementation approach where documentation drives all development decisions and serves as the single source of truth for the entire project.",
-  "createdAt": "2024-01-01T00:00:00.000Z",
-  "updatedAt": "2024-01-01T00:00:00.000Z"
+  "version": "0.1.0",
+  "description": "The ContextEngine is built upon the Documentation Driven Development (DDD) methodology and provides comprehensive contextual information about processes and systems. It serves as a composable context engine that delivers relevant context related to development processes, system architecture, and operational workflows. The engine dynamically composes contextual information to support decision-making and provide situational awareness across the entire development lifecycle, while maintaining documentation as the single source of truth.",
+  "createdAt": "2025-08-19T00:00:00.000Z",
+  "updatedAt": "2025-08-19T00:00:00.000Z"
 }

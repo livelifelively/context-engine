@@ -36,7 +36,7 @@ describe('Seed Methodology Document Migration', () => {
   it('should create methodology document successfully', async () => {
     // Create test-specific data with unique ID
     const testData = {
-      'dgraph.type': '_System_Document__Documentation_Driven_Development_Methodology_',
+      'node_type': '_System_Document__Documentation_Driven_Development_Methodology_',
       name_id: `test-ddd-methodology-${Date.now()}`,
       document_type: 'methodology',
       title: 'Test Documentation Driven Development',
@@ -83,7 +83,7 @@ describe('Seed Methodology Document Migration', () => {
   it('should rollback methodology document successfully', async () => {
     // Create test-specific data with unique ID
     const testData = {
-      'dgraph.type': '_System_Document__Documentation_Driven_Development_Methodology_',
+      'node_type': '_System_Document__Documentation_Driven_Development_Methodology_',
       name_id: `test-rollback-${Date.now()}`,
       document_type: 'methodology',
       title: 'Test Rollback Document',
@@ -133,9 +133,9 @@ describe('Seed Methodology Document Migration', () => {
     const dataContent = fs.readFileSync(dataPath, 'utf8');
     const data = JSON.parse(dataContent);
     
-    expect(data['dgraph.type']).toBe('_System_Document__Documentation_Driven_Development_Methodology_');
+    expect(data['node_type']).toBe('_System_Document__Documentation_Driven_Development_Methodology_');
     expect(data.name_id).toBe('ddd-methodology-v1');
     expect(data.title).toBe('Documentation Driven Development');
-    expect(data.version).toBe('1.0.0');
+    expect(data.version).toBe('0.1.0');
   });
 });

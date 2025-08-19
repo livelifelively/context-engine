@@ -50,7 +50,7 @@ describe('DGraphService', () => {
     it('should create a methodology document', async () => {
       const uniqueId = `test-dgraph-service-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       const testData = {
-        'dgraph.type': '_System_Document__Documentation_Driven_Development_Methodology_',
+        'node_type': '_System_Document__Documentation_Driven_Development_Methodology_',
         name_id: uniqueId,
         document_type: 'methodology',
         title: 'Test DGraphService Methodology',
@@ -75,7 +75,7 @@ describe('DGraphService', () => {
       // First create a test document
       const uniqueId = `test-query-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       const testData = {
-        'dgraph.type': '_System_Document__Documentation_Driven_Development_Methodology_',
+        'node_type': '_System_Document__Documentation_Driven_Development_Methodology_',
         name_id: uniqueId,
         document_type: 'methodology',
         title: 'Test Query Document',
