@@ -1,0 +1,10 @@
+{
+  "dgraph.type": "_System_Document__Documentation_Driven_Development_Methodology_",
+  "name_id": "ddd-methodology-v1",
+  "document_type": "methodology",
+  "title": "Documentation Driven Development",
+  "version": "1.0.0",
+  "description": "This document establishes the Documentation Driven Development (DDD) methodology for software development projects. It defines the principles, structure, and implementation approach where documentation drives all development decisions and serves as the single source of truth for the entire project.",
+  "createdAt": "2024-01-01T00:00:00.000Z",
+  "updatedAt": "2024-01-01T00:00:00.000Z"
+}

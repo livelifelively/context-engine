@@ -1,5 +1,6 @@
 import { config } from 'dotenv';
 import { DGraphService } from './services/dgraph.service';
+import { runMigrations } from './migrations/run-migrations';
 
 // Load environment variables
 config();
@@ -13,6 +14,14 @@ async function main() {
     await dgraphService.initialize();
     
     console.log('✅ DGraph connection established');
+    
+    // Run migrations if --migrate flag is provided
+    if (process.argv.includes('--migrate')) {
+      console.log('🔄 Running migrations...');
+      await runMigrations();
+      console.log('✅ Migrations completed');
+    }
+    
     console.log('📊 Server ready on port 8008');
     
     // Keep the process alive
