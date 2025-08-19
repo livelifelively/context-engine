@@ -1,4 +1,4 @@
-import { DgraphClient, DgraphClientStub } from 'dgraph-js';
+import { DgraphClient, DgraphClientStub, Mutation, Operation } from 'dgraph-js';
 import * as grpc from '@grpc/grpc-js';
 
 export class DGraphService {
@@ -48,7 +48,7 @@ export class DGraphService {
   async createDQL(data: any): Promise<string> {
     const txn = this.client.newTxn();
     try {
-      const mu = new (require('dgraph-js').Mutation)();
+      const mu = new Mutation();
       mu.setSetJson(data);
       const response = await txn.mutate(mu);
       await txn.commit();
@@ -75,7 +75,7 @@ export class DGraphService {
   async updateDQL(uid: string, data: any): Promise<void> {
     const txn = this.client.newTxn();
     try {
-      const mu = new (require('dgraph-js').Mutation)();
+      const mu = new Mutation();
       mu.setSetJson({ uid, ...data });
       await txn.mutate(mu);
       await txn.commit();
@@ -88,7 +88,7 @@ export class DGraphService {
   async deleteDQL(uid: string): Promise<void> {
     const txn = this.client.newTxn();
     try {
-      const mu = new (require('dgraph-js').Mutation)();
+      const mu = new Mutation();
       // Use N-Quads format for deletion
       mu.setDelNquads(`<${uid}> * * .`);
       await txn.mutate(mu);
@@ -103,7 +103,7 @@ export class DGraphService {
   async createGraphQL(data: any): Promise<string> {
     const txn = this.client.newTxn();
     try {
-      const mu = new (require('dgraph-js').Mutation)();
+      const mu = new Mutation();
       mu.setSetJson(data);
       const response = await txn.mutate(mu);
       await txn.commit();
@@ -130,7 +130,7 @@ export class DGraphService {
   async updateGraphQL(uid: string, data: any): Promise<void> {
     const txn = this.client.newTxn();
     try {
-      const mu = new (require('dgraph-js').Mutation)();
+      const mu = new Mutation();
       mu.setSetJson({ uid, ...data });
       await txn.mutate(mu);
       await txn.commit();
@@ -143,7 +143,7 @@ export class DGraphService {
   async deleteGraphQL(uid: string): Promise<void> {
     const txn = this.client.newTxn();
     try {
-      const mu = new (require('dgraph-js').Mutation)();
+      const mu = new Mutation();
       // Use N-Quads format for deletion
       mu.setDelNquads(`<${uid}> * * .`);
       await txn.mutate(mu);
@@ -157,7 +157,7 @@ export class DGraphService {
   // Schema operations
   async setSchema(schema: string): Promise<void> {
     try {
-      const op = new (require('dgraph-js').Operation)();
+      const op = new Operation();
       op.setSchema(schema);
       await this.client.alter(op);
       console.log('✅ Schema updated successfully');
@@ -169,7 +169,7 @@ export class DGraphService {
 
   async getSchema(): Promise<string> {
     try {
-      const op = new (require('dgraph-js').Operation)();
+      const op = new Operation();
       await this.client.alter(op);
       // For now, return empty string as getSchema() method might not be available
       // We can implement a proper schema retrieval later

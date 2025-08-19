@@ -24,8 +24,8 @@ class Logger {
   private logFile: string;
   private errorLogFile: string;
 
-  constructor() {
-    this.logDir = path.join(process.cwd(), 'logs');
+  constructor(logDir?: string) {
+    this.logDir = logDir || path.join(process.cwd(), 'logs');
     this.logFile = path.join(this.logDir, `schema-${this.getDateString()}.log`);
     this.errorLogFile = path.join(this.logDir, `schema-errors-${this.getDateString()}.log`);
     
@@ -286,3 +286,6 @@ class Logger {
 
 // Export singleton instance
 export const logger = new Logger();
+
+// Export the Logger class for testing
+export { Logger };

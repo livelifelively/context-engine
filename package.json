@@ -22,7 +22,13 @@
     "logs:view": "node -r ts-node/register src/schema/scripts/view-logs.ts",
     "logs:errors": "node -r ts-node/register src/schema/scripts/view-logs.ts --errors",
     "logs:raw": "node -r ts-node/register src/schema/scripts/view-logs.ts --raw",
-    "logs:raw-errors": "node -r ts-node/register src/schema/scripts/view-logs.ts --raw --errors"
+    "logs:raw-errors": "node -r ts-node/register src/schema/scripts/view-logs.ts --raw --errors",
+    "test:schema": "vitest run src/schema/scripts/__tests__/",
+    "test:schema:watch": "vitest src/schema/scripts/__tests__/",
+    "test:schema:coverage": "vitest run --coverage src/schema/scripts/__tests__/",
+    "test:all": "vitest run",
+    "test:all:watch": "vitest",
+    "test:all:coverage": "vitest run --coverage"
   },
   "repository": {
     "type": "git",
