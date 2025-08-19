@@ -4,12 +4,33 @@ This directory contains database migrations for seeding and managing data in the
 
 ## Structure
 
-- `index.ts` - Migration manager and interfaces
-- `run-migrations.ts` - Script to run all migrations
-- `utils/generic-migration.ts` - Generic migration utility for data-driven migrations
-- `001-seed-methodology-document.ts` - First migration to seed the methodology document
-- `data/` - JSON data files for migrations
-- `__tests__/` - Tests for migrations
+```
+src/migrations/
+├── README.md                           # This documentation
+├── index.ts                           # Migration manager and interfaces
+├── run-migrations.ts                  # Script to run all migrations
+├── migrations/                        # Actual migration files
+│   ├── 001-seed-methodology-document.ts
+│   ├── 002-*.ts                       # Future migrations
+│   └── ...
+├── data/                             # Migration data files
+│   ├── methodology-document.json
+│   ├── workflows/                    # Grouped by domain
+│   │   └── ...
+│   └── sections/                     # Grouped by domain
+│       └── ...
+├── utils/                            # Migration utilities
+│   ├── generic-migration.ts
+│   ├── migration-helpers.ts          # Common helper functions
+│   └── validation.ts                 # Data validation utilities
+├── scripts/                          # Development/debug scripts
+│   ├── debug-query.ts
+│   ├── test-migration.ts
+│   └── migration-status.ts           # Check migration status
+└── __tests__/                        # Migration tests
+    ├── 001-seed-methodology-document.test.ts
+    └── ...
+```
 
 ## Usage
 
@@ -23,15 +44,25 @@ npm run migrate
 npm run dev -- --migrate
 ```
 
+### Development Scripts
+
+```bash
+# Test a specific migration
+npm run migrate:test
+
+# Debug database queries
+npm run migrate:debug
+```
+
 ### Create New Migration
 
 #### Option 1: Generic Migration (Recommended for data seeding)
 
 1. Create a JSON data file in `src/migrations/data/` with your document data
-2. Create a migration file using the generic utility:
+2. Create a migration file in `src/migrations/migrations/` using the generic utility:
 
 ```typescript
-import { createGenericMigration } from './utils/generic-migration';
+import { createGenericMigration } from '../utils/generic-migration';
 
 export const yourMigration = createGenericMigration(
   'XXX',
@@ -51,12 +82,12 @@ export const yourMigration = createGenericMigration(
 
 #### Option 2: Custom Migration
 
-1. Create a new file following the naming convention: `XXX-description.ts`
+1. Create a new file in `src/migrations/migrations/` following the naming convention: `XXX-description.ts`
 2. Export a migration object with the following structure:
 
 ```typescript
-import { Migration } from './index';
-import { DGraphService } from '../services/dgraph.service';
+import { Migration } from '../index';
+import { DGraphService } from '../../services/dgraph.service';
 
 export const yourMigration: Migration = {
   id: 'XXX',
@@ -90,7 +121,7 @@ Creates the base Documentation Driven Development methodology document without s
 **Data Created:**
 - Document type: `_System_Document__Documentation_Driven_Development_Methodology_`
 - Name ID: `ddd-methodology-v1`
-- Version: `1.0.0`
+- Version: `0.1.0`
 - Title: `Documentation Driven Development`
 
 **Data Source:** `src/migrations/data/methodology-document.json`
@@ -114,3 +145,5 @@ interface Migration {
 4. **Logging**: Use the logger for important operations
 5. **Error Handling**: Properly handle and report errors
 6. **Data Validation**: Verify data after creation
+7. **Organization**: Keep related data files grouped by domain
+8. **Naming**: Use clear, descriptive names for migrations and data files

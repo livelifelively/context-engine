@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
-import { DGraphService } from '../services/dgraph.service';
-import { seedMethodologyDocument } from './001-seed-methodology-document';
+import { DGraphService } from '../../services/dgraph.service';
+import { seedMethodologyDocument } from '../migrations/001-seed-methodology-document';
 
 // Load environment variables
 config();

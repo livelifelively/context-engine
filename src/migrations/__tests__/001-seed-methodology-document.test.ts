@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { DGraphService } from '../../services/dgraph.service';
-import { seedMethodologyDocument } from '../001-seed-methodology-document';
+import { seedMethodologyDocument } from '../migrations/001-seed-methodology-document';
 import * as fs from 'fs';
 import * as path from 'path';
 

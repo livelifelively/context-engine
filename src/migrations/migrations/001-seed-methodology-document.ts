@@ -1,4 +1,4 @@
-import { createGenericMigration } from './utils/generic-migration';
+import { createGenericMigration } from '../utils/generic-migration';
 
 export const seedMethodologyDocument = createGenericMigration(
   '001',

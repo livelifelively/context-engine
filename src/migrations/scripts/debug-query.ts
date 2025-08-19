@@ -1,5 +1,5 @@
 import { config } from 'dotenv';
-import { DGraphService } from '../services/dgraph.service';
+import { DGraphService } from '../../services/dgraph.service';
 
 // Load environment variables
 config();
@@ -69,6 +69,28 @@ async function debugQuery() {
     
     const result4 = await dgraphService.query(query4);
     console.log('Result 4:', JSON.stringify(result4, null, 2));
+
+    console.log('\n🔍 Query 5: Detailed methodology document with all fields');
+    const query5 = `
+      query {
+        docs: query_System_Document__Documentation_Driven_Development_Methodology_(filter: { name_id: { eq: "ddd-methodology-v1" } }) {
+          id
+          name_id
+          document_type
+          title
+          version
+          description
+          createdAt
+          updatedAt
+          sections {
+            id
+          }
+        }
+      }
+    `;
+    
+    const result5 = await dgraphService.query(query5);
+    console.log('Result 5 (Detailed):', JSON.stringify(result5, null, 2));
     
   } catch (error) {
     console.error('❌ Debug failed:', error);
