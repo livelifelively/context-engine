@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import chalk from 'chalk';
 import { type DirectoryConfig, type SchemaOrderConfig } from './types';
+import { logger } from './logger';
 
 // Configuration - these can be easily changed for different projects
 const SCHEMA_DIR = path.join(__dirname, '../schemas');
@@ -233,11 +234,12 @@ function sortBySchemaPriority(a: GraphQLFile, b: GraphQLFile, orderConfig: Schem
 }
 
 function generateCombinedSchema(): void {
-  console.log(chalk.cyan('🔄 Generating combined schema...'));
+  logger.info('🔄 Generating combined schema...');
   
   // Check if schemas directory exists
   if (!fs.existsSync(SCHEMA_DIR)) {
-    console.error(chalk.red(`❌ Error: Schemas directory not found: ${chalk.bold(SCHEMA_DIR)}`));
+    const errorMsg = `Schemas directory not found: ${SCHEMA_DIR}`;
+    logger.error(errorMsg);
     return;
   }
 
@@ -248,7 +250,8 @@ function generateCombinedSchema(): void {
   let graphqlFiles = getAllGraphQLFiles(SCHEMA_DIR);
   
   if (graphqlFiles.length === 0) {
-    console.error(chalk.red('❌ Error: No GraphQL files found in schemas directory'));
+    const errorMsg = 'No GraphQL files found in schemas directory';
+    logger.error(errorMsg);
     return;
   }
   
@@ -256,13 +259,13 @@ function generateCombinedSchema(): void {
   if (orderConfig) {
     const before = graphqlFiles.length;
     graphqlFiles = graphqlFiles.filter(file => isFileInConfig(file.relativePath, orderConfig));
-    console.log(chalk.yellow(`📋 Filtered from ${chalk.bold(before)} to ${chalk.bold(graphqlFiles.length)} files based on schema-order.ts`));
+    logger.info(`📋 Filtered from ${before} to ${graphqlFiles.length} files based on schema-order.ts`);
     
     // Log files that were excluded for debugging
     if (before > graphqlFiles.length) {
-      console.log(chalk.yellow('🔍 Excluded files:'));
+      logger.warn('🔍 Excluded files:');
       getAllGraphQLFiles(SCHEMA_DIR).filter(file => !isFileInConfig(file.relativePath, orderConfig))
-        .forEach(file => console.log(chalk.gray(`  - ${file.relativePath}`)));
+        .forEach(file => logger.debug(`  - ${file.relativePath}`));
     }
   }
   
@@ -273,46 +276,63 @@ function generateCombinedSchema(): void {
   let combinedSchema = '# COMBINED SCHEMA\n# Auto-generated from schema files\n\n';
   
   for (const file of graphqlFiles) {
-    console.log(chalk.blue(`📄 Processing schema: ${chalk.bold(file.relativePath)}`));
+    logger.info(`📄 Processing schema: ${file.relativePath}`);
     
     try {
       const content = fs.readFileSync(file.path, 'utf8');
       combinedSchema += `\n# ----- ${file.relativePath} ----- \n${content}\n# ----- END ${file.relativePath} ----- \n`;
     } catch (error) {
-      console.error(chalk.red(`❌ Error reading schema file ${file.relativePath}: ${(error as Error).message}`));
+      logger.logErrorWithContext(error as Error, {
+        file: file.relativePath,
+        filePath: file.path,
+        operation: 'read_schema_file'
+      }, `Schema file read: ${file.relativePath}`);
     }
   }
   
   // Handle special case of schema.graphql at the root level
   const rootSchemaPath = path.join(SCHEMA_DIR, 'schema.graphql');
   if (fs.existsSync(rootSchemaPath)) {
-    console.log(chalk.blue('📄 Processing root schema.graphql'));
+    logger.info('📄 Processing root schema.graphql');
     try {
       const rootSchema = fs.readFileSync(rootSchemaPath, 'utf8');
       // Add root schema at the end
       combinedSchema += `\n# ---------- \n${rootSchema}\n# ---------- \n`;
     } catch (error) {
-      console.error(chalk.red(`❌ Error reading root schema file: ${(error as Error).message}`));
+      logger.logErrorWithContext(error as Error, {
+        file: 'schema.graphql',
+        filePath: rootSchemaPath,
+        operation: 'read_root_schema_file'
+      }, 'Root schema file read');
     }
   }
   
   // Ensure dist directory exists
   if (!fs.existsSync(DIST_DIR)) {
-    console.log(chalk.blue(`📁 Creating dist directory: ${chalk.bold(DIST_DIR)}`));
+    logger.info(`📁 Creating dist directory: ${DIST_DIR}`);
     fs.mkdirSync(DIST_DIR, { recursive: true });
   }
 
   // Write combined schema to file
   try {
     fs.writeFileSync(OUTPUT_SCHEMA_PATH, combinedSchema);
-    console.log(chalk.green(`✅ Combined schema successfully written to: ${chalk.bold(OUTPUT_SCHEMA_PATH)}`));
-    console.log(chalk.blue(`💡 This file should be committed to the repository as it's used by the database.`));
+    logger.logSchemaBuild(OUTPUT_SCHEMA_PATH, true);
+    logger.info(`✅ Combined schema successfully written to: ${OUTPUT_SCHEMA_PATH}`);
+    logger.info(`💡 This file should be committed to the repository as it's used by the database.`);
   } catch (error) {
-    console.error(chalk.red(`❌ Error writing combined schema file: ${(error as Error).message}`));
+    logger.logSchemaBuild(OUTPUT_SCHEMA_PATH, false, (error as Error).message, {
+      outputPath: OUTPUT_SCHEMA_PATH,
+      operation: 'write_combined_schema'
+    });
+    
+    logger.logErrorWithContext(error as Error, {
+      outputPath: OUTPUT_SCHEMA_PATH,
+      operation: 'write_combined_schema'
+    }, 'Schema file write');
   }
 }
 
 // Execute the schema generation
 generateCombinedSchema();
 
-console.log(chalk.green.bold('\n🎉 Schema modularization complete! 🎉\n'));
+logger.info('🎉 Schema modularization complete! 🎉');

@@ -15,8 +15,14 @@
     "clean": "rm -rf dist",
     "prebuild": "npm run clean",
     "schema:build": "node -r ts-node/register src/schema/scripts/index.ts",
-    "schema:apply": "npm run schema:build && echo 'Schema built successfully. Use the generated schema.combined.graphql file with Dgraph.'",
-    "db:init": "npm run schema:build && echo 'Schema ready for Dgraph initialization. Apply schema.combined.graphql to your Dgraph instance.'"
+    "schema:apply": "npm run schema:build && node -r ts-node/register src/schema/scripts/apply-schema.ts",
+    "schema:apply:dry-run": "npm run schema:build && node -r ts-node/register src/schema/scripts/apply-schema.ts --dry-run",
+    "db:init": "npm run schema:apply",
+    "db:init:dry-run": "npm run schema:apply:dry-run",
+    "logs:view": "node -r ts-node/register src/schema/scripts/view-logs.ts",
+    "logs:errors": "node -r ts-node/register src/schema/scripts/view-logs.ts --errors",
+    "logs:raw": "node -r ts-node/register src/schema/scripts/view-logs.ts --raw",
+    "logs:raw-errors": "node -r ts-node/register src/schema/scripts/view-logs.ts --raw --errors"
   },
   "repository": {
     "type": "git",

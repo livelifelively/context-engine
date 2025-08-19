@@ -9,13 +9,17 @@
 type _System_Document_Section_List_Item_ {
   id: ID!
 
-  document: _System_Document_ @hasInverse(field: sections)
+  document: _System_Document__Documentation_Driven_Development_Methodology_ @hasInverse(field: sections)
   section: _System_Document_Section_ @hasInverse(field: document_list_item)
   order: Int!
 
   createdAt: DateTime!
   updatedAt: DateTime!
 }
+
+
+
+
 
 type _System_Document_Section_ {
   id: ID!
