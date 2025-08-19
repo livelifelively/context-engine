@@ -1,0 +1,45 @@
+# Section and content management types
+# Handles the hierarchical structure of document sections and their content
+
+type _System_Document_Section_List_Item_ {
+  id: ID!
+
+  document: _System_Document_ @hasInverse(field: sections)
+  section: _System_Document_Section_ @hasInverse(field: document_list_item)
+  order: Int!
+
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type _System_Document_Section_ {
+  id: ID!
+
+  name_id: String
+
+  description: String
+  title: String!
+
+  document_list_item: _System_Document_Section_List_Item_ @hasInverse(field: section)
+  ordered_content: [_System_Document_Section_Ordered_Content_]!
+
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type _System_Document_Section_Ordered_Content_ {
+  id: ID!
+  
+  section: _System_Document_Section_ @hasInverse(field: ordered_content)
+  
+  # markdown string
+  content: String!
+  # table, list, paragraph, code, etc.
+  content_type: String!
+
+  # order in the parent
+  order: Int!
+  
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}

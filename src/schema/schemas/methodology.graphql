@@ -1,0 +1,21 @@
+# Documentation Driven Development Methodology
+# The main document that defines the documentation driven development methodology
+# May have multiple versions. One for one version.
+# First context element when context-engine is initialized.
+
+type _System_Document__Documentation_Driven_Development_Methodology_ {
+  id: ID!
+  name_id: String! @id
+
+  document_type: String!
+  
+  title: String!
+  version: String!
+  
+  description: String!
+
+  sections: [_System_Document_Section_List_Item_]! @hasInverse(field: document)
+
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
