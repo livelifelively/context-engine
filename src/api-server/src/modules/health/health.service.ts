@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import axios from 'axios';
+import { fetch } from 'undici';
 
 @Injectable()
 export class HealthService {
@@ -21,20 +21,27 @@ export class HealthService {
       const dgraphPort = this.configService.get<string>('DGRAPH_ALPHA_PORT', '8080').replace('9080', '8080');
       
       // Test DGraph connection with a simple GraphQL introspection query
-      const response = await axios.post(`http://${dgraphHost}:${dgraphPort}/graphql`, {
-        query: '{ __schema { types { name } } }'
-      }, {
-        timeout: 5000,
+      const response = await fetch(`http://${dgraphHost}:${dgraphPort}/graphql`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          query: '{ __schema { types { name } } }'
+        })
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json() as any;
 
       return {
         status: 'ok',
         database: 'DGraph',
         endpoint: `${dgraphHost}:${dgraphPort}`,
-        types: response.data.data?.__schema?.types?.length || 0,
+        types: data.data?.__schema?.types?.length || 0,
       };
     } catch (error) {
       return {
