@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  api-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8008:8008"
+    environment:
+      - DATABASE_SERVICE_URL=http://database-service:8009
+      - NODE_ENV=production
+    volumes:
+      - ./docker-data/api-logs:/app/logs
+    networks:
+      - api-network
+
+networks:
+  api-network:
+    driver: bridge

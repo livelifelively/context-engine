@@ -1,4 +1,5 @@
 services:
+  # DGraph services
   zero:
     image: dgraph/dgraph:latest
     volumes:
@@ -7,6 +8,8 @@ services:
       - "5080:5080"
       - "6080:6080"
     command: dgraph zero --my=zero:5080
+    networks:
+      - context-engine-network
 
   alpha:
     image: dgraph/dgraph:latest
@@ -18,6 +21,8 @@ services:
     depends_on:
       - zero
     command: dgraph alpha --my=alpha:7080 --zero=zero:5080 --bindall --security="whitelist=0.0.0.0/0"
+    networks:
+      - context-engine-network
 
   ratel:
     image: dgraph/ratel:latest
@@ -26,23 +31,31 @@ services:
     depends_on:
       - alpha
     command: dgraph-ratel
+    networks:
+      - context-engine-network
 
-  # App service - uncomment for production deployment
-  # app:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8008:8008"
-  #   depends_on:
-  #     - alpha
-  #   environment:
-  #     - DGRAPH_ALPHA_HOST=alpha
-  #     - DGRAPH_ALPHA_PORT=9080
-  #   volumes:
-  #     - ./docker-data/app-logs:/app/logs
+  # API server
+  api-server:
+    build:
+      context: ./src/api-server
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - alpha
+    environment:
+      - DGRAPH_ALPHA_HOST=alpha
+      - DGRAPH_ALPHA_PORT=9080
+      - NODE_ENV=production
+    volumes:
+      - ./docker-data/api-logs:/app/logs
+    networks:
+      - context-engine-network
 
-# Named volumes for explicit path management
+networks:
+  context-engine-network:
+    driver: bridge
+
 volumes:
   dgraph_data:
     driver: local
