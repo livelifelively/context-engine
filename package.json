@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "nodemon --exec ts-node src/index.ts",
-    "test": "vitest",
+    "test": "vitest run",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest --coverage",
     "lint": "eslint src/**/*.ts",
@@ -19,6 +19,11 @@
     "schema:apply:dry-run": "npm run schema:build && node -r ts-node/register src/schema/scripts/apply-schema.ts --dry-run",
     "db:init": "npm run schema:apply",
     "db:init:dry-run": "npm run schema:apply:dry-run",
+    "migrate": "node -r ts-node/register src/migrations/run-migrations.ts",
+    "migrate:rollback": "node -r ts-node/register src/migrations/run-migrations.ts --rollback",
+    "migrate:test": "node -r ts-node/register src/migrations/scripts/test-migration.ts",
+    "migrate:debug": "node -r ts-node/register src/migrations/scripts/debug-query.ts",
+    "migrate:analyze": "node -r ts-node/register src/migrations/scripts/analyze-schema-dependencies.ts",
     "logs:view": "node -r ts-node/register src/schema/scripts/view-logs.ts",
     "logs:errors": "node -r ts-node/register src/schema/scripts/view-logs.ts --errors",
     "logs:raw": "node -r ts-node/register src/schema/scripts/view-logs.ts --raw",
@@ -43,8 +48,6 @@
   },
   "homepage": "https://github.com/livelifelively/context-engine-server#readme",
   "dependencies": {
-    "@grpc/grpc-js": "^1.13.4",
-    "dgraph-js": "^24.2.0",
     "dotenv": "^17.2.1"
   },
   "devDependencies": {

@@ -4,7 +4,6 @@ import { logger } from '../schema/scripts/logger';
 export interface Migration {
   id: string;
   name: string;
-  dependencies?: string[];  // Array of migration IDs this migration depends on
   up: (dgraphService: DGraphService) => Promise<void>;
   down?: (dgraphService: DGraphService) => Promise<void>;
 }
@@ -19,17 +18,9 @@ export class MigrationManager {
   async runMigrations(migrations: Migration[]): Promise<void> {
     logger.info('Starting migrations...');
     
-    // Validate dependencies
-    this.validateDependencies(migrations);
-    
-    // Sort migrations by dependencies (topological sort)
-    const sortedMigrations = this.sortMigrationsByDependencies(migrations);
-    
-    logger.info(`Running ${sortedMigrations.length} migrations in dependency order...`);
-    
-    for (const migration of sortedMigrations) {
+    for (const migration of migrations) {
       try {
-        logger.info(`Running migration: ${migration.name} (${migration.id})`);
+        logger.info(`Running migration: ${migration.name}`);
         await migration.up(this.dgraphService);
         logger.info(`✅ Migration completed: ${migration.name}`);
       } catch (error) {
@@ -39,50 +30,6 @@ export class MigrationManager {
     }
     
     logger.info('All migrations completed successfully');
-  }
-
-  private validateDependencies(migrations: Migration[]): void {
-    const migrationIds = new Set(migrations.map(m => m.id));
-    
-    for (const migration of migrations) {
-      if (migration.dependencies) {
-        for (const depId of migration.dependencies) {
-          if (!migrationIds.has(depId)) {
-            throw new Error(`Migration ${migration.id} depends on ${depId}, but that migration is not defined`);
-          }
-        }
-      }
-    }
-  }
-
-  private sortMigrationsByDependencies(migrations: Migration[]): Migration[] {
-    const migrationMap = new Map(migrations.map(m => [m.id, m]));
-    const visited = new Set<string>();
-    const sorted: Migration[] = [];
-    
-    const visit = (migrationId: string) => {
-      if (visited.has(migrationId)) return;
-      
-      const migration = migrationMap.get(migrationId);
-      if (!migration) return;
-      
-      // Visit dependencies first
-      if (migration.dependencies) {
-        for (const depId of migration.dependencies) {
-          visit(depId);
-        }
-      }
-      
-      visited.add(migrationId);
-      sorted.push(migration);
-    };
-    
-    // Visit all migrations
-    for (const migration of migrations) {
-      visit(migration.id);
-    }
-    
-    return sorted;
   }
 
   async rollback(migrations: Migration[], count: number = 1): Promise<void> {
@@ -107,12 +54,5 @@ export class MigrationManager {
     }
     
     logger.info('Rollback completed successfully');
-  }
-
-  // Helper method to check if a migration has been run
-  async checkMigrationStatus(migrationId: string): Promise<boolean> {
-    // This could check a migrations table in the database
-    // For now, we'll assume all migrations need to run
-    return false;
   }
 }

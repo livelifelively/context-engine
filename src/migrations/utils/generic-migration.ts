@@ -27,6 +27,23 @@ export function createGenericMigration(
       const dataContent = fs.readFileSync(dataPath, 'utf8');
       const data = JSON.parse(dataContent);
       
+      // Check if document already exists
+      const checkQuery = `
+        query {
+          documents: query${config.queryFilter.type}(filter: { ${config.queryFilter.field}: { eq: "${config.queryFilter.value}" } }) {
+            id
+            ${config.queryFilter.field}
+          }
+        }
+      `;
+
+      const checkResult = await dgraphService.query(checkQuery);
+      
+      if (checkResult.data && checkResult.data.documents && checkResult.data.documents.length > 0) {
+        console.log(`⚠️ ${name} already exists, skipping creation`);
+        return;
+      }
+      
       // Update timestamps
       const now = new Date().toISOString();
       data.createdAt = now;
