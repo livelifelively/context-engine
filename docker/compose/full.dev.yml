@@ -3,7 +3,7 @@ services:
   zero:
     image: dgraph/dgraph:latest
     volumes:
-      - ./docker-data/dgraph:/dgraph
+      - ../../docker-data/dgraph:/dgraph
     ports:
       - "5080:5080"
       - "6080:6080"
@@ -14,7 +14,7 @@ services:
   alpha:
     image: dgraph/dgraph:latest
     volumes:
-      - ./docker-data/dgraph:/dgraph
+      - ../../docker-data/dgraph:/dgraph
     ports:
       - "8080:8080"
       - "9080:9080"
@@ -37,7 +37,7 @@ services:
   # API server
   api-server:
     build:
-      context: ./src/api-server
+      context: ../../src/api-server
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
@@ -46,9 +46,10 @@ services:
     environment:
       - DGRAPH_ALPHA_HOST=alpha
       - DGRAPH_ALPHA_PORT=9080
-      - NODE_ENV=production
+      - NODE_ENV=development
+      - PORT=3000
     volumes:
-      - ./docker-data/api-logs:/app/logs
+      - ../../docker-data/api-logs:/app/logs
     networks:
       - context-engine-network
 
@@ -62,4 +63,4 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ./docker-data/dgraph
+      device: ../../docker-data/dgraph
