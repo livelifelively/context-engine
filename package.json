@@ -3,9 +3,6 @@
   "version": "0.0.1",
   "description": "Context Engine Server - DGraph Database and NestJS API",
   "private": true,
-  "workspaces": [
-    "src/*"
-  ],
   "scripts": {
     "dev": "docker-compose up",
     "dev:build": "docker-compose up --build",
