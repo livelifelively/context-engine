@@ -1,0 +1,122 @@
+# COMBINED SCHEMA
+# Auto-generated from schema files
+
+
+# ----- sections.graphql ----- 
+# Section and content management types
+# Handles the hierarchical structure of document sections and their content
+
+type _System_Document_Section_List_Item_ {
+  id: ID!
+
+  document: _System_Document__Documentation_Driven_Development_Methodology_ @hasInverse(field: sections)
+  section: _System_Document_Section_ @hasInverse(field: document_list_item)
+  order: Int!
+
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+
+
+
+
+type _System_Document_Section_ {
+  id: ID!
+
+  name_id: String
+
+  description: String
+  title: String!
+
+  document_list_item: _System_Document_Section_List_Item_ @hasInverse(field: section)
+  ordered_content: [_System_Document_Section_Ordered_Content_]!
+
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type _System_Document_Section_Ordered_Content_ {
+  id: ID!
+  
+  section: _System_Document_Section_ @hasInverse(field: ordered_content)
+  
+  # markdown string
+  content: String!
+  # table, list, paragraph, code, etc.
+  content_type: String!
+
+  # order in the parent
+  order: Int!
+  
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ----- END sections.graphql ----- 
+
+# ----- methodology.graphql ----- 
+# Documentation Driven Development Methodology
+# The main document that defines the documentation driven development methodology
+# May have multiple versions. One for one version.
+# First context element when context-engine is initialized.
+
+type _System_Document__Documentation_Driven_Development_Methodology_ {
+  id: ID!
+  name_id: String! @id
+
+  document_type: String!
+  
+  title: String!
+  version: String!
+  
+  description: String!
+
+  sections: [_System_Document_Section_List_Item_]! @hasInverse(field: document)
+
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ----- END methodology.graphql ----- 
+
+# ----- workflow.graphql ----- 
+# Workflow and Phase Management
+# Second context element when context-engine is initialized.
+# Passed in after user selected a workflow.
+# Defines the focus of conversation.
+# A workflow can be interactive or autonomous.
+# A workflow is a sequence of phases.
+
+type _System_Document__Workflow_ {
+  id: ID!
+  name_id: String! @id
+  name: String!
+  version: String!
+  # description
+  description: String!
+
+  sections: [_System_Document_Section_]!
+
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# Phase is a step in a workflow.
+# A phase can be interactive or autonomous.
+# A phase is a sequence of steps.
+# A phase has goal, actions, checkpoints, outcomes, exit criteria.
+# A phase may have an artifact that can be a document node or code.
+type _System_Document__Workflow_Phase_ {
+  id: ID!
+  name_id: String! @id
+  name: String!
+  version: String!
+  # description
+  description: String!
+
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ----- END workflow.graphql ----- 
