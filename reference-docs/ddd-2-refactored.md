@@ -17,7 +17,7 @@ This text establishes the **ContextEngine system** which uses **Documentation Dr
 
 **Human**: You are like the Driver. You are in full and complete control of the strategic direction, goals, and final decisions. You must use the ContextEngine system as your interface to command the AI Vehicle System. The quality of your documentation directly determines the quality of the AI's output and the knowledge base for future conversations.
 
-## 2. Why Documentation-First (Need & Problem)
+## 2. Why ContextEngine - Problem and Solution
 
 ### 2.1 AI Perspective
 
@@ -162,9 +162,9 @@ This text establishes the **ContextEngine system** which uses **Documentation Dr
 - **Team Cohesion**: ContextEngine's shared documentation helps smaller teams stay aligned across technical and business domains
 - **Productivity Enhancement**: ContextEngine's integrated documentation of technical and non-technical aspects improves overall team productivity
 
-## 3. Core Methodology & Principles (What)
+## 3. What is ContextEngine - Core Methodology & Principles
 
-The DDD methodology is built on 12 fundamental building blocks that work together to create an effective AI-human collaboration system. Let's explore how these blocks connect and build upon each other.
+The DDD methodology is built on 10 fundamental building blocks that work together to create an effective AI-human collaboration system. Let's explore how these blocks connect and build upon each other.
 
 ### 3.1 Primary Interface for Interaction
 
@@ -250,27 +250,23 @@ The objective is high accuracy with speed, but not bloated outputs. Since AI out
 - [2.1.1.1 AI Decision Making - Decision Fatigue](#2111-for-ai-decision-making)
 - [2.1.1.1 AI Decision Making - Enforcement Uncertainty](#2111-for-ai-decision-making)
 
-### 3.8 Empathy
+### 3.8 Empathy and Continuous Improvement
 
-This building block establishes **mutual understanding** in the AI-human relationship. AI should have empathy for human constraints and capabilities, while humans should accept that AI is not living but also not a free resource. 
+We need **mutual understanding and evolution** in the AI-human relationship. AI should have empathy for human constraints and capabilities, while humans should accept that AI is not living but also not a free resource.
 
 The inputs to AI are cheaper than outputs from AI, so human must ensure that all the relevant context is provided for the conversation as well as for every request in the conversation. The output quality depends on input quality.
+
+The system is **evolutionary** - it improves as Human and AI understand each other better. This building block emphasizes identifying issues quickly and focusing on continuous improvement. System awareness enables better adaptation and problem-solving.
 
 **Addresses**: 
 - [2.2.1.3 Human-AI Interaction - Human Frustration](#2213-for-human-ai-interaction)
 - [2.2.1.3 Human-AI Interaction - Paradigm Rejection Risk](#2213-for-human-ai-interaction)
 - [2.1.1.2 AI-Human Interaction - Misunderstanding](#2112-for-ai-human-interaction)
-
-### 3.9 Identify Issues Fast and Focus on Improvements
-
-The system is **evolutionary** - it improves as Human and AI understand each other better. This building block emphasizes identifying issues quickly and focusing on continuous improvement. System awareness enables better adaptation and problem-solving.
-
-**Addresses**: 
 - [2.2.1.4 Human Quality Assurance - Scale Complexity](#2214-for-human-quality-assurance)
 - [2.2.1.4 Human Quality Assurance - Regression Detection Challenges](#2214-for-human-quality-assurance)
 - [2.1.1.3 AI Quality Assurance - Completeness Uncertainty](#2113-for-ai-quality-assurance)
 
-### 3.10 System Awareness
+### 3.9 System Awareness
 
 Both AI and Human must be **aware of this ContextEngine system** they're using.
 
@@ -286,7 +282,7 @@ This creates a ubiquitous language for better AI-Human, AI-AI, and Human-Human i
 - [2.1.1.2 AI-Human Interaction - Communication Confusion](#2112-for-ai-human-interaction)
 
 
-### 3.11 Strictness but Flexible
+### 3.10 Structured Adaptability
 
 Both Human and AI must **adhere to rules, but keep space for experimentation**. While the ContextEngine system demands following the DDD methodology, it also provides space for trying new approaches. 
 
@@ -299,252 +295,248 @@ This flexibility addresses the need for adaptation to new problems and situation
 - [2.2.1.5 Project/Business Goals - Team Coordination Challenges](#2215-for-project-product-and-business-goals)
 - [2.2.1.2 Human-Human Interaction - Domain Information Silos](#2212-for-human-human-interaction)
 
----
+## 4. How ContextEngine Works - Workflows, Phases & Execution
 
-These building blocks work together to create a comprehensive methodology that addresses all the problems we identified in section 2. They provide the foundation for the specific workflows we'll explore in section 4.
+### 4.1 Available Workflows
 
+ContextEngine provides a comprehensive set of **executable workflows** that structure AI-human collaboration. Each workflow is a standardized, repeatable process designed to be **completable in a single conversation session**. Each workflow has a specific objective, defined inputs, and clear exit criteria. Workflows break down complex development processes into manageable, focused tasks. Each AI-Human conversation executes one workflow. The objective is to focus on one aspect of the software development process and complete it systematically through structured workflows.
 
+#### 4.1.1 Development Workflows
 
+**1. Plan Documentation**
+- **Objective**: Create comprehensive strategic documentation that serves as the foundation for projects or major components
+- **Scope**: Business context, architectural design, implementation planning, and quality strategy
+- **Artifacts**: Strategic plan documents with business justification, technical architecture, and implementation roadmap
+- **Process**: Collaborative creation with human providing strategic direction and AI ensuring schema compliance and completeness
 
-------------- PREVIOUS_VERSION -------------
+**2. Task Documentation**
+- **Objective**: Create detailed implementation specifications for specific work items
+- **Scope**: Requirements, technical specifications, acceptance criteria, and implementation approach
+- **Artifacts**: Task documents with clear deliverables, acceptance criteria, and implementation guidance
+- **Process**: Collaborative specification with human providing requirements and AI structuring and validating the documentation
 
-<!-- 1. Document Objective (Command & Contract)
-2. Why Documentation-First (Need & Problem)
-3. Core Methodology & Principles (What)
-4. Workflows & Implementation (How + User Selection) -->
+**3. Task Implementation**
+- **Objective**: Transform documented requirements into working code following test-driven development
+- **Scope**: Code implementation, testing, validation, and documentation updates
+- **Artifacts**: Implemented code, comprehensive test suites, and updated documentation
+- **Process**: AI-led execution with human oversight, following documented specifications and maintaining implementation logs
 
-## Core Methodology & Principles
+**4. Implementation Review**
+- **Objective**: Validate implemented code against documentation and quality standards
+- **Scope**: Code quality, documentation compliance, and adherence to specifications
+- **Artifacts**: Review reports, quality assessments, and approval or revision recommendations
+- **Process**: Human-led review with AI providing analysis and suggestions for improvements
 
-### Development Philosophy
+**5. Documentation Synchronization**
+- **Objective**: Maintain consistency between code and documentation as changes occur
+- **Scope**: Change detection, impact analysis, and documentation updates
+- **Artifacts**: Updated documentation reflecting current code state and change logs
+- **Process**: Collaborative maintenance with AI identifying changes and human approving updates
 
-```mermaid
-flowchart LR
-    A["Document FIRST"] --> B["Design"] --> C["Implement"] --> D["Validate"] --> E["Document Changes"] --> A
-```
+#### 4.1.2 Supporting Workflows
 
-### Fundamental Principles
+**6. Implementation Planning**
+- **Objective**: Define technical approach and constraints for task implementation
+- **Scope**: Technical strategy, resource planning, and implementation constraints
+- **Artifacts**: Implementation plans with technical approach and resource requirements
+- **Process**: Collaborative planning with human providing constraints and AI proposing technical approaches
 
-1. **Documentation Before Code**: **ZERO code changes occur without corresponding documentation updates happening FIRST.** Documentation is the authoritative source of truth that drives all implementation decisions.
+**7. Pre-Implementation Review**
+- **Objective**: Validate task documentation before implementation begins
+- **Scope**: Documentation completeness, feasibility, and implementation readiness
+- **Artifacts**: Review reports and implementation readiness assessments
+- **Process**: Human-led review with AI providing analysis of documentation quality and completeness
 
-2. **Business Context First**: Every document starts with business justification and user value before diving into technical details.
+**8. Test Implementation Review**
+- **Objective**: Validate test implementation against requirements and quality standards
+- **Scope**: Test coverage, quality, and alignment with acceptance criteria
+- **Artifacts**: Test review reports and quality assessments
+- **Process**: Human-led validation with AI providing test analysis and coverage assessment
 
-3. **Self-Sufficient Documents**: Each document contains sufficient context to understand its scope without requiring extensive cross-referencing, while maintaining clear links to related decisions.
+#### 4.1.3 System Workflows
 
-4. **Structured Decision Documentation**: Decisions are documented at the appropriate level of scope and detail, distributed between Plans (high-level decisions) and Tasks (implementation decisions).
+**9. Workflow Creation**
+- **Objective**: Design and document new standardized workflows for repeatable processes
+- **Scope**: Workflow design, documentation, and standardization
+- **Artifacts**: New workflow documents with clear objectives, phases, and execution guidelines
+- **Process**: Collaborative design with human providing vision and AI structuring and refining the workflow
 
-5. **Documentation as Source of Truth**: When documentation and code conflict, documentation is correct by definition. Code must be updated to match documentation.
+#### 4.1.4 Workflow Selection Criteria
 
-6. **Actionable Content**: Each section must enable decision-making or implementation, with specific acceptance criteria and concrete examples.
+Each workflow is designed for specific scenarios:
 
-7. **Flexible Hierarchical Structure**: This methodology uses a flexible hierarchical approach where Plans can contain other Plans, Tasks, or a mix of both. This allows the documentation structure to scale naturally with project complexity - simple projects can use just Plans with Tasks, while complex projects can nest Plans to create deeper hierarchies as needed.
+- **Documentation Creation**: Use Plan/Task Documentation workflows when creating new strategic or implementation documents
+- **Code Implementation**: Use Task Implementation workflow when turning documented requirements into code
+- **Quality Assurance**: Use Review workflows when validating work against documentation
+- **System Evolution**: Use Workflow Creation when standardizing new processes
 
-## Why Documentation-First for Software Development
+**Next Step**: The AI agent will confirm agreement to the ContextEngine system and list all available workflows. You will then select one workflow to proceed with.
 
-### Project Complexity Drivers
+### 4.2 Workflow Structure & Phases
 
-- **Complex Domain:** Modern software systems involve multiple interconnected components where requirements must be fully understood and documented before any implementation begins.
+Every ContextEngine workflow follows a standardized structure designed to provide **focused, executable guidance** for AI-human collaboration. This structure ensures consistency, clarity, and systematic progress through complex development processes.
 
-- **Stakeholder Alignment:** Complex user workflows require crystal-clear definition in documentation before implementation to ensure user acceptance.
+#### 4.2.1 Workflow Structure Components
 
-- **System Integration:** Multiple system components require well-defined, documented interfaces and data contracts before any connections are built.
+**Objective**: Single, clearly defined purpose that the workflow accomplishes
+**Participants**: Defined roles (Human Developer, AI Assistant) and their responsibilities
+**When to Use**: Circumstances that indicate this workflow should be started
+**Control Model**: How participants interact (Collaborative, AI-Led, Human-Led)
+**Phases**: Logical breakdown of the workflow into manageable steps
 
-- **Quality Assurance:** Complex business processes need clear oversight with documented decision criteria and audit trails established before implementation.
+#### 4.2.2 Phase Characteristics
 
-### Expected Benefits
+Each workflow phase has the following characteristics:
 
-- **Eliminated Development Risk:** Complete requirements and decisions documented and validated before any implementation
-- **Structured Complexity Management:** Plan/Task documentation approach manages complexity by separating high-level direction from implementation details
-- **Predictable Development Flow:** Documentation completeness drives implementation readiness
-- **Superior Maintenance:** All decisions and trade-offs documented before they're built into code
-- **User-Centered Design:** User workflows fully documented and validated before development begins
+- **Clear Goal**: Specific objective that the phase accomplishes
+- **Defined Inputs**: What context, documentation, or artifacts are needed
+- **Action Steps**: Specific, executable instructions for each participant
+- **Checkpoints**: Verifiable completion criteria and quality gates
+- **Exit Criteria**: Clear definition of when the phase is complete
+- **Outputs**: What artifacts or decisions are produced
 
-## Documentation-Driven Development Workflow
+#### 4.2.3 Phase Execution Model
 
-### Mandatory Documentation-First Process
+**Single-Workflow Focus**: Each AI-human conversation executes exactly one workflow. One workflow completion needs multiple constituent phases execution to complete.
+**Context Provision**: Each phase starts with identifying what context is needed. It calls the phase context tool to fetch three types of context: process context (workflow and phase information), vertical context (parent plan/task hierarchy), and horizontal context (peer plans/tasks). 
+**Progressive Completion**: Phases build upon each other, with outputs from one phase becoming inputs to the next
+**Quality Gates**: Each phase includes checkpoints to ensure quality before proceeding
+**Flexible Duration**: Phase completion is based on meeting exit criteria, not time constraints
 
-**Core Rule: NO IMPLEMENTATION WITHOUT COMPLETE DOCUMENTATION**
+#### 4.2.4 Workflow-Phase Relationship
 
-**Primary Workflow (4-Step Process):**
+**Workflow**: Defines the complete process from start to finish. Workflows are process abstractions that provide the overall structure and methodology for completing development tasks.
 
-1. Document Requirement
-2. Review Documentation
-3. Implement to Documentation
-4. Validate Against Documentation
+**Phase**: Represents one focused step within that process. Phases are the execution level where actual work happens, tools are called, context is provided, and artifacts are produced.
 
-**Process Relationship Clarification:**
+**Conversation**: Executes one phase with phase-specific context and objectives. Each conversation focuses on completing a single phase within the selected workflow.
 
-- **6-Step Philosophy Cycle**: High-level continuous improvement cycle (Document FIRST → Design → Implement → Validate → Document Changes → Iterate)
-- **4-Step Operational Workflow**: Specific workflow for each Plan or Task (Document → Review → Implement → Validate)
-- **Plan/Task Hierarchical Structure**: Flexible recursive organization where Plans contain strategic decisions and can hold other Plans, Tasks, or both, creating adaptable hierarchies that scale naturally with project complexity
-- **Task Implementation Focus**: Tasks contain implementation details, test cases, artifacts, and implementation logs
-- **Development Phases**: Project lifecycle phases (Creation → Implementation → Validation → Evolution)
+**Progression**: A single, focused conversation session is dedicated to completing one full workflow, executing all of its phases in sequence to reach the final objective.
 
-Each serves a different purpose: the Philosophy Cycle drives continuous improvement, the Operational Workflow manages individual work items, and the Plan/Task Structure provides flexible organization that scales with complexity.
+**Execution Hierarchy**: All levels above phases, including workflows, systems, and methodologies, are process abstractions that provide structure and guidance. Phases are where process meets execution - this is where the actual development work happens, where ContextEngine tools are called, where relevant context is provided, and where concrete artifacts are produced.
 
-### 1. **Documentation Creation Phase**
+### 4.3 Artifacts & Milestones
 
-- Document all requirements, designs, and decisions BEFORE any code
-- Complete documentation review and approval process
-- Validate documentation completeness and consistency
-- NO implementation begins until documentation is complete
+ContextEngine workflows produce specific artifacts and milestones that serve as both outputs and inputs for the development process. These artifacts create a chain reaction where each output becomes context for future conversations and workflows.
 
-### 2. **Implementation Phase**
+#### 4.3.1 Core Artifacts
 
-- Code written to exactly match approved documentation
-- Implementation follows documentation specifications precisely
-- Any discovered gaps require STOPPING implementation and updating documentation first
+**Documentation Artifacts**: The primary outputs of ContextEngine workflows are structured documentation files that follow specific schemas and formats.
 
-### 3. **Validation Phase**
+**Plan Documents**: Strategic documentation that serves as the foundation for projects or major components. These documents contain business context, architectural design, implementation planning, and quality strategy.
 
-- Verify implementation matches documentation exactly
-- Document any approved variations from original specification
-- Update documentation if implementation reveals better approaches (documentation-first)
+**Task Documents**: Implementation specifications that define specific work items. These documents contain requirements, technical specifications, acceptance criteria, and implementation guidance.
 
-### 4. **Documentation Evolution Phase**
+**Workflow Documents**: Standardized process definitions that can be executed by AI assistants. These documents contain objectives, phases, participants, and execution guidelines.
 
-- When changes are needed, update documentation FIRST
-- Re-approve updated documentation before implementing changes
-- Maintain documentation as the authoritative source of truth
+#### 4.3.2 Implementation Artifacts
 
-## Implementation Approach
+**Code Artifacts**: Implemented code that follows documented specifications and requirements. Code artifacts include source files, configuration files, and deployment scripts.
 
-### Composable Plan/Task Flexible Hierarchy
+**Test Artifacts**: Comprehensive test suites that validate implementation against documented requirements. Test artifacts include unit tests, integration tests, and acceptance tests.
 
-Our documentation follows a flexible hierarchical structure using two document types that scale naturally with project complexity:
+**Review Artifacts**: Quality assessment reports that validate work against documentation and standards. Review artifacts include code reviews, documentation compliance reports, and quality assessments.
 
-```mermaid
-flowchart TD
-    A["Project Plan<br/>(project.plan.md)"] --> B["Backend Plan<br/>(backend.plan.md)"]
-    A --> C["Frontend Plan<br/>(frontend.plan.md)"]
-    A --> D["Database Setup Task<br/>(db-setup.task.md)"]
+#### 4.3.3 Process Artifacts
 
-    B --> E["API Plan<br/>(api.plan.md)"]
-    B --> F["Auth Task<br/>(auth.task.md)"]
+**Context Artifacts**: Structured context information that enables efficient AI-human collaboration. These include context inheritance chains, peer relationship mappings, and workflow state information.
 
-    E --> G["Users Endpoint Task<br/>(users-api.task.md)"]
-    E --> H["Products Endpoint Task<br/>(products-api.task.md)"]
+**Validation Artifacts**: Quality assurance outputs that ensure consistency and completeness. These include validation reports, compliance checks, and completeness assessments.
 
-    C --> I["Components Task<br/>(components.task.md)"]
-    C --> J["Routing Task<br/>(routing.task.md)"]
-```
+**Synchronization Artifacts**: Documentation updates that maintain consistency between code and documentation. These include change logs, impact analyses, and documentation updates.
 
-### Documentation-Driven Development Sequence
+#### 4.3.4 Milestones & Completion Criteria
 
-#### **1. Start with Plans (Strategic Direction)**
+**Phase Milestones**: Specific completion criteria for each workflow phase. These milestones ensure that each phase produces the required artifacts and meets quality standards before proceeding.
 
-- Create a top-level Plan documenting system architecture, technology decisions, and business requirements
-- Document comprehensive user journeys and business processes
-- Establish project-wide standards and quality gates
-- **No implementation begins until the foundational Plan is complete**
+**Workflow Milestones**: Overall completion criteria for entire workflows. These milestones ensure that the complete workflow objective has been achieved and all required artifacts have been produced.
 
-#### **2. Decompose Plans Based on Complexity**
+**Quality Gates**: Verification checkpoints that validate artifacts against requirements and standards. Quality gates ensure that outputs meet the documented specifications and quality criteria.
 
-- **For Simple Areas:** Plans can directly contain Tasks for straightforward implementation work
-- **For Complex Areas:** Plans can contain sub-Plans to break down complexity further
-- **Mixed Approach:** Plans can contain both sub-Plans and Tasks as appropriate
-- Define clear boundaries and integration points between components
-- Document design decisions and trade-offs at the appropriate level
-- **No work begins on any component until its Plan is complete**
+**Exit Criteria**: Clear definitions of when workflows and phases are complete. Exit criteria provide measurable outcomes that determine successful completion.
 
-#### **3. Create Tasks for Implementation Work**
+#### 4.3.5 Artifact Relationships
 
-- Tasks contain detailed implementation requirements and specifications
-- Document specific technical decisions, algorithms, and step-by-step guidance
-- Include test cases, artifacts to be created, and implementation logs
-- **No coding begins until Task documentation is complete**
+**Input-Output Chain**: Artifacts from one workflow become inputs for subsequent workflows. This creates a continuous chain of documentation and implementation that builds upon previous work.
 
-#### **4. Maintain Hierarchical Consistency**
+**Context Inheritance**: Artifacts inherit context from parent documents and provide context to child documents. This ensures consistency and traceability throughout the development process.
 
-- Higher-level Plans define strategic direction and constraints
-- Lower-level Plans inherit context and refine details
-- Tasks implement within the constraints defined by their parent Plan
-- **All documentation must be complete before implementation at any level**
+**Cross-Reference Network**: Artifacts reference and link to related artifacts across the development hierarchy. This network enables comprehensive understanding and navigation of the entire system.
 
-**Note:** The detailed schema for document content structure and information organization is defined in the canonical document [ddd-2-schema.machine.md](./generated-schema-docs/ddd-2-schema.machine.md).
+**Version Control Integration**: All artifacts are version-controlled and tracked through the development process. This ensures traceability and enables rollback to previous states when needed.
 
-## Living Documentation Process
+### 4.4 Composable Context Tools
 
-### Documentation-First Change Management
+ContextEngine provides a set of MCP (Model Context Protocol) tools that enable dynamic context composition and workflow execution. These tools work together to provide the right context at the right time for any workflow or phase.
 
-**Principle:** ALL changes begin with documentation updates, regardless of size or urgency.
+#### 4.4.1 Knowledge Graph & Context Composition
 
-#### **Documentation-First Change Workflow**
+**Graph-Based Context Provision**: ContextEngine stores all documentation in a knowledge graph that maintains hierarchical relationships between plans, tasks, and their content sections. When a workflow phase needs context, the system queries the graph to retrieve relevant parent plans, peer tasks, and specific documentation sections based on the current workflow and phase requirements.
 
-```
-Change Request → Update Documentation → Review → Implement → Validate
-```
+**Precise Context Selection**: Instead of providing entire documents, the knowledge graph enables ContextEngine to compose context by selecting only the relevant sections. For example, when implementing a task, the system provides the task's acceptance criteria, its parent plan's architecture section, and related peer tasks' interfaces - not the entire documentation corpus.
 
-**Mandatory Steps:**
+**Relationship-Aware Context**: The graph structure enables context composition that understands relationships. When working on a task, ContextEngine automatically includes context from its parent plan chain, sibling tasks that share dependencies, and related architectural decisions - creating a comprehensive but focused context that reflects the actual project structure.
 
-1. **Document the Change:** Update relevant documentation with all proposed changes
-2. **Design Review:** Validate documentation changes for completeness and consistency
-3. **Implementation:** Code updated to match the approved documentation exactly
-4. **Validation:** Verify implementation matches updated documentation precisely
+#### 4.4.2 Context Composition Process
 
-#### **No-Exception Scenarios**
+**Workflow Context Loading**: When a workflow is selected, the system loads the workflow definition, its phases, and the general context needed for that type of work.
 
-**Architecture Changes:**
+**Phase Context Composition**: For each phase, the system queries the knowledge graph to retrieve relevant documentation sections schema, parent plans documentation or sections, peer tasks documentation or sections, and relationship information.
 
-- Document new component relationships FIRST, then build
-- Update integration patterns FIRST, then implement connections
-- Define data models FIRST, then write data handling code
+**Dynamic Context Assembly**: The tools assemble context in real-time based on the specific requirements of the current phase, ensuring that only relevant information is provided.
 
-**Feature Development:**
+### 4.5 Detailed Protocols
 
-- Document user stories and acceptance criteria FIRST, then code
-- Update API specifications FIRST, then implement endpoints
-- Define state management patterns FIRST, then write state logic
+ContextEngine implements specific protocols that govern how context is inherited, how documentation is structured, and how relationships are maintained throughout the development process.
 
-**Bug Fixes:**
+#### 4.5.1 Context Inheritance Protocol
 
-- Document root cause analysis FIRST, then fix
-- Update business rules if bug reveals incorrect assumptions FIRST
-- Document the fix approach FIRST, then implement
+**Progressive Narrowing**: Context flows from broad to specific through the document hierarchy. Each document inherits context from its parent documents and adds its own specific context.
 
-**Quick Changes:**
+**Top-Down Traversal**: When reading any document, the system must traverse from the root plan downward, progressively narrowing scope. This ensures complete context inheritance.
 
-- Even "trivial" changes require documentation updates FIRST
-- No "emergency" exceptions to documentation-first rule
-- All changes, regardless of size, follow documentation-first process
+**No Information Repetition**: Information is never repeated across documents. Each document adds only its specific content, inheriting all other context from parent documents.
 
-#### **Implementation Discovery Protocol**
+**Relationship Preservation**: The inheritance protocol maintains all hierarchical relationships, peer relationships, and semantic connections between documents.
 
-When implementation work reveals new requirements or constraints:
+#### 4.5.2 Documentation Section Protocols
 
-1. **IMMEDIATELY STOP ALL IMPLEMENTATION**
-2. **UPDATE DOCUMENTATION** with discovered requirements
-3. **REVIEW** documentation changes
-4. **RESUME IMPLEMENTATION** only after documentation is complete
+**Schema Compliance**: All documentation must follow the defined schemas for plans, tasks, and other document types. This ensures consistency and enables automated processing.
 
-**Enforcement:** No implementation continues until documentation accurately reflects all discovered requirements.
+**Section Hierarchy**: Documentation sections are organized in a specific hierarchy that reflects the logical flow of information from business context to implementation details.
 
+**Cross-Reference Management**: Sections reference other sections and documents using standardized linking protocols that maintain relationship integrity.
 
+**Version Control Integration**: All section changes are tracked through version control, enabling traceability and rollback capabilities.
 
-## Section Relationship Matrix
+#### 4.5.3 Relationship Management Protocols
 
-The following matrix shows how the H2 sections in this document relate to each other:
+**Hierarchical Relationships**: Parent-child relationships between plans and tasks are explicitly defined and maintained through standardized naming conventions and structural patterns.
 
-| Section | Document Objective | Core Methodology | Why Documentation-First | Workflow | Implementation Approach | Living Documentation Process |
-|---------|-------------------|------------------|-------------------------|----------|------------------------|------------------------------|
-| **Document Objective** | - | Provides scope & context | Provides scope & context | Provides scope & context | Provides scope & context | Provides scope & context |
-| **Core Methodology** | Receives context | - | Provides philosophical foundation | Provides principles | Provides principles | Provides principles |
-| **Why Documentation-First** | Receives scope | Receives philosophy | - | Provides motivation | Provides motivation | Provides motivation |
-| **Workflow** | Receives scope | Receives principles | Receives motivation | - | Provides process framework | Provides process framework |
-| **Implementation Approach** | Receives scope | Receives principles | Receives motivation | Receives process | - | Provides methods |
-| **Living Documentation Process** | Receives scope | Receives principles | Receives motivation | Receives process | Receives methods | - |
+**Peer Relationships**: Sibling documents and related work items are linked through dependency declarations and cross-references that enable comprehensive context provision.
 
-### Relationship Flow Summary
+**Semantic Relationships**: Documents are connected through semantic relationships that reflect business logic, technical dependencies, and conceptual associations.
 
-**Primary Flow**: Document Objective → Core Methodology → Workflow → Implementation Approach → Living Documentation Process
+**Relationship Validation**: All relationships are validated to ensure consistency and prevent circular dependencies or broken references.
 
-**Supporting Flows**: 
-- Document Objective → Why Documentation-First → Implementation Approach
+## 5. ContextEngine Model Context Protocol (MCP) Tools
 
-**Key Insights**:
-- Document Objective is the foundational section that influences all others
-- Core Methodology provides principles that guide all operational sections
-- Workflow bridges philosophy with practical implementation
-- Implementation Approach and Living Documentation Process form the operational core
-- Schema details are maintained in the separate canonical document (ddd-2-schema.machine.md)
+ContextEngine provides a set of MCP (Model Context Protocol) tools that enable dynamic context composition and workflow execution. These tools work together to provide the right context at the right time for any workflow or phase.
 
+#### 5.1 Core MCP Tools
 
+**initialize_context_engine**: Starts the ContextEngine process by loading this document as the foundational context. This tool establishes the system awareness and provides the base methodology that governs all subsequent interactions.
+
+**select_workflow**: Enables workflow selection and loads workflow-specific context. This tool presents available workflows, explains their purposes, and prepares the context needed for the selected workflow execution.
+
+**process_active_workflow_phase**: Provides phase-specific context by querying the knowledge graph. This tool composes context based on the active workflow, current phase, and the specific task or plan being worked on.
+
+#### 5.2 Tool Integration
+
+**Seamless Workflow**: The tools work together to provide a seamless experience where context is automatically composed and provided without manual intervention.
+
+**Context Efficiency**: By providing only relevant context, the tools ensure that AI assistants receive focused, actionable information without information overload.
+
+**Relationship Awareness**: The tools understand and utilize the hierarchical and peer relationships stored in the knowledge graph to provide comprehensive context.
+
+**Quality Assurance**: The tools validate that all required context is available and properly structured before proceeding with workflow execution.
