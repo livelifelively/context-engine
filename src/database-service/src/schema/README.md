@@ -15,8 +15,8 @@ src/schema/
 │   ├── schema-order.ts       # Schema ordering configuration
 │   ├── types.ts              # TypeScript type definitions
 │   └── schema-organization.md # Organization documentation
-├── dist/                     # Generated output
-│   └── schema.combined.graphql # Combined schema for Dgraph
+├── dist/                     # Other generated output
+├── schema.combined.graphql   # Combined schema for Dgraph (committed to git)
 └── README.md                 # This file
 ```
 
@@ -53,7 +53,7 @@ npm run logs:errors
 # Build the combined schema
 npm run schema:build
 
-# This will generate src/schema/dist/schema.combined.graphql
+# This will generate src/schema/schema.combined.graphql
 ```
 
 ### Adding New Schema Files
@@ -135,12 +135,12 @@ You can also apply the schema manually:
 
 ```bash
 # Using Dgraph CLI
-dgraph graphql schema --graphql-file src/schema/dist/schema.combined.graphql
+dgraph graphql schema --graphql-file src/schema/schema.combined.graphql
 
 # Or using HTTP API
 curl -X POST localhost:8080/admin/schema \
   -H "Content-Type: application/graphql" \
-  --data-binary @src/schema/dist/schema.combined.graphql
+  --data-binary @src/schema/schema.combined.graphql
 ```
 
 ## Git Workflow
@@ -155,7 +155,7 @@ The `schema.combined.graphql` file should be committed to the repository because
 ### Workflow:
 1. Modify individual schema files in `src/schema/schemas/`
 2. Run `npm run schema:build` to regenerate the combined schema
-3. Review the changes in `src/schema/dist/schema.combined.graphql`
+3. Review the changes in `src/schema/schema.combined.graphql`
 4. Commit both the individual files AND the combined schema file
 
 ## Logging System

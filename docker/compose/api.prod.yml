@@ -1,0 +1,21 @@
+services:
+  # API server only - connects to external DGraph
+  api-server:
+    build:
+      context: ../../src/api-server
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      # Connect to external DGraph (update these values)
+      - DGRAPH_ALPHA_HOST=your-dgraph-host
+      - DGRAPH_ALPHA_PORT=8080
+      - NODE_ENV=production
+    volumes:
+      - ../../docker-data/api-logs:/app/logs
+    networks:
+      - api-network
+
+networks:
+  api-network:
+    driver: bridge

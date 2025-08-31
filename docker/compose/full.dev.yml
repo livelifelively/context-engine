@@ -1,0 +1,66 @@
+services:
+  # DGraph services
+  zero:
+    image: dgraph/dgraph:latest
+    volumes:
+      - ../../docker-data/dgraph:/dgraph
+    ports:
+      - "5080:5080"
+      - "6080:6080"
+    command: dgraph zero --my=zero:5080
+    networks:
+      - context-engine-network
+
+  alpha:
+    image: dgraph/dgraph:latest
+    volumes:
+      - ../../docker-data/dgraph:/dgraph
+    ports:
+      - "8080:8080"
+      - "9080:9080"
+    depends_on:
+      - zero
+    command: dgraph alpha --my=alpha:7080 --zero=zero:5080 --bindall --security="whitelist=0.0.0.0/0"
+    networks:
+      - context-engine-network
+
+  ratel:
+    image: dgraph/ratel:latest
+    ports:
+      - "8000:8000"
+    depends_on:
+      - alpha
+    command: dgraph-ratel
+    networks:
+      - context-engine-network
+
+  # API server
+  api-server:
+    build:
+      context: ../../src/api-server
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - alpha
+    environment:
+      - DGRAPH_ALPHA_HOST=alpha
+      - DGRAPH_ALPHA_PORT=9080
+      - NODE_ENV=development
+      - PORT=3000
+    volumes:
+      - ../../docker-data/api-logs:/app/logs
+    networks:
+      - context-engine-network
+
+networks:
+  context-engine-network:
+    driver: bridge
+
+volumes:
+  dgraph_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ../../docker-data/dgraph

@@ -6,8 +6,7 @@ import { logger } from './logger';
 
 // Configuration - these can be easily changed for different projects
 const SCHEMA_DIR = path.join(__dirname, '../schemas');
-const DIST_DIR = path.join(__dirname, '../dist');
-const OUTPUT_SCHEMA_PATH = path.join(DIST_DIR, 'schema.combined.graphql');
+const OUTPUT_SCHEMA_PATH = path.join(__dirname, '../schema.combined.graphql');
 
 // Define types for better type safety
 interface GraphQLFile {
@@ -307,10 +306,11 @@ function generateCombinedSchema(): void {
     }
   }
   
-  // Ensure dist directory exists
-  if (!fs.existsSync(DIST_DIR)) {
-    logger.info(`📁 Creating dist directory: ${DIST_DIR}`);
-    fs.mkdirSync(DIST_DIR, { recursive: true });
+  // Ensure output directory exists (same directory as the output file)
+  const outputDir = path.dirname(OUTPUT_SCHEMA_PATH);
+  if (!fs.existsSync(outputDir)) {
+    logger.info(`📁 Creating output directory: ${outputDir}`);
+    fs.mkdirSync(outputDir, { recursive: true });
   }
 
   // Write combined schema to file

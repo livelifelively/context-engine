@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import { logger } from './logger';
 
 // Configuration
-const SCHEMA_PATH = path.join(__dirname, '../dist/schema.combined.graphql');
+const SCHEMA_PATH = path.join(__dirname, '../schema.combined.graphql');
 const DGRAPH_HOST = process.env.DGRAPH_HOST || 'localhost';
 const DGRAPH_PORT = process.env.DGRAPH_PORT || '8080';
 

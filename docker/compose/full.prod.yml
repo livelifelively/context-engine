@@ -1,0 +1,120 @@
+services:
+  # API server - production optimized
+  api-server:
+    build:
+      context: ../../src/api-server
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      # Connect to external DGraph (update these for your production setup)
+      - DGRAPH_ALPHA_HOST=${DGRAPH_ALPHA_HOST:-localhost}
+      - DGRAPH_ALPHA_PORT=${DGRAPH_ALPHA_PORT:-8080}
+      - NODE_ENV=production
+      - PORT=3000
+    volumes:
+      - ../../docker-data/api-logs:/app/logs
+    networks:
+      - context-engine-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: Local DGraph for production (comment out if using external DGraph)
+  zero:
+    image: dgraph/dgraph:latest
+    volumes:
+      - ../../docker-data/dgraph:/dgraph
+    ports:
+      - "5080:5080"
+      - "6080:6080"
+    command: dgraph zero --my=zero:5080
+    networks:
+      - context-engine-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1.0'
+        reservations:
+          memory: 512M
+          cpus: '0.5'
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:6080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  alpha:
+    image: dgraph/dgraph:latest
+    volumes:
+      - ../../docker-data/dgraph:/dgraph
+    ports:
+      - "8080:8080"
+      - "9080:9080"
+    depends_on:
+      - zero
+    command: dgraph alpha --my=alpha:7080 --zero=zero:5080 --bindall --security="whitelist=0.0.0.0/0"
+    networks:
+      - context-engine-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '2.0'
+        reservations:
+          memory: 1G
+          cpus: '1.0'
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: Ratel UI (comment out in production if not needed)
+  ratel:
+    image: dgraph/ratel:latest
+    ports:
+      - "8000:8000"
+    depends_on:
+      - alpha
+    command: dgraph-ratel
+    networks:
+      - context-engine-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.25'
+        reservations:
+          memory: 128M
+          cpus: '0.1'
+
+networks:
+  context-engine-network:
+    driver: bridge
+
+volumes:
+  dgraph_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ../../docker-data/dgraph

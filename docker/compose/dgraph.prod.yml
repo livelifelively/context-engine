@@ -1,23 +1,28 @@
 services:
+  # DGraph services only
   zero:
     image: dgraph/dgraph:latest
     volumes:
-      - ./docker-data/dgraph:/dgraph
+      - ../../docker-data/dgraph:/dgraph
     ports:
       - "5080:5080"
       - "6080:6080"
     command: dgraph zero --my=zero:5080
+    networks:
+      - dgraph-network
 
   alpha:
     image: dgraph/dgraph:latest
     volumes:
-      - ./docker-data/dgraph:/dgraph
+      - ../../docker-data/dgraph:/dgraph
     ports:
       - "8080:8080"
       - "9080:9080"
     depends_on:
       - zero
     command: dgraph alpha --my=alpha:7080 --zero=zero:5080 --bindall --security="whitelist=0.0.0.0/0"
+    networks:
+      - dgraph-network
 
   ratel:
     image: dgraph/ratel:latest
@@ -26,27 +31,17 @@ services:
     depends_on:
       - alpha
     command: dgraph-ratel
+    networks:
+      - dgraph-network
 
-  # App service - uncomment for production deployment
-  # app:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8008:8008"
-  #   depends_on:
-  #     - alpha
-  #   environment:
-  #     - DGRAPH_ALPHA_HOST=alpha
-  #     - DGRAPH_ALPHA_PORT=9080
-  #   volumes:
-  #     - ./docker-data/app-logs:/app/logs
+networks:
+  dgraph-network:
+    driver: bridge
 
-# Named volumes for explicit path management
 volumes:
   dgraph_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ./docker-data/dgraph
+      device: ../../docker-data/dgraph
