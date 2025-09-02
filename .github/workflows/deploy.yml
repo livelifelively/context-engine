@@ -23,9 +23,15 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
           
+      - name: Debug SSH connection
+        run: |
+          echo "Testing SSH connection..."
+          ssh-add -l
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PubkeyAuthentication=yes -o PasswordAuthentication=no -v ec2-user@${{ secrets.SERVER_HOST }} "echo 'SSH connection successful'"
+          
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.SERVER_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PubkeyAuthentication=yes -o PasswordAuthentication=no ec2-user@${{ secrets.SERVER_HOST }} << 'EOF'
             # Navigate to the project directory
             cd /home/ec2-user/context-engine-server
             
