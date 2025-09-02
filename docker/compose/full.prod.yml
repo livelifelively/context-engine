@@ -5,7 +5,7 @@ services:
       context: ../../src/api-server
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "80:3000"
     environment:
       # Connect to external DGraph (update these for your production setup)
       - DGRAPH_ALPHA_HOST=${DGRAPH_ALPHA_HOST:-localhost}
