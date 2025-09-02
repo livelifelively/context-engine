@@ -1,0 +1,66 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          
+      - name: Add server to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+          
+      - name: Deploy to server
+        run: |
+          ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.SERVER_HOST }} << 'EOF'
+            # Navigate to the project directory
+            cd /home/ec2-user/context-engine-server
+            
+            # Stop the docker-compose services
+            echo "Stopping docker-compose services..."
+            docker compose -f docker/compose/full.prod.yml down
+            
+            # Pull latest changes from master
+            echo "Pulling latest changes from master..."
+            git fetch origin
+            git reset --hard origin/master
+            
+            # Start the docker-compose services
+            echo "Starting docker-compose services..."
+            docker compose -f docker/compose/full.prod.yml up -d
+            
+            # Wait a moment for services to start
+            sleep 10
+            
+            # Check if services are running
+            echo "Checking service status..."
+            docker compose -f docker/compose/full.prod.yml ps
+            
+            # Check if containers are healthy
+            echo "Checking container health..."
+            docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+            
+            # Verify the main service is responding (adjust port as needed)
+            echo "Verifying service health..."
+            if curl -f http://localhost:3000/health > /dev/null 2>&1; then
+              echo "✅ Service is healthy and responding"
+            else
+              echo "❌ Service health check failed"
+              exit 1
+            fi
+            
+            echo "🚀 Deployment completed successfully!"
+          EOF
