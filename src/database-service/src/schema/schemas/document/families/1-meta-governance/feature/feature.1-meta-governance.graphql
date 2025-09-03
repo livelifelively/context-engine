@@ -8,8 +8,8 @@
 # =============================================================================
 
 type _Section_1_3_History_Feature_ implements _Section_1_3_History_ {
-  # Additional fields specific to Feature (base fields inherited from interface)
-  parent: _Family_1_MetaGovernance_Feature_! @hasInverse(field: history)
+  # feature specific meta governance family
+  family: _Family_1_MetaGovernance_Feature_! @hasInverse(field: history)
 }
 
 # =============================================================================
@@ -17,8 +17,9 @@ type _Section_1_3_History_Feature_ implements _Section_1_3_History_ {
 # =============================================================================
 
 type _Family_1_MetaGovernance_Feature_ implements _Family_1_MetaGovernance_ {
-  # Additional fields specific to Feature (base fields inherited from interface)
-  history: _Section_1_3_History_Feature_! @hasInverse(field: parent)
+  # feature specific meta governance sections
+  history: _Section_1_3_History_Feature_! @hasInverse(field: family)
 
+  # feature specific meta governance document
   document: _Document_Feature_! @hasInverse(field: metaGovernance)
 }

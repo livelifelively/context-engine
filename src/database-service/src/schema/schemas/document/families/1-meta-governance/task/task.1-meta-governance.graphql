@@ -1,14 +1,11 @@
 # Family 1: Meta & Governance - Task Document Type
 
-# Import shared types and interfaces
-#import "../shared.1-meta-governance.graphql"
-
 # =============================================================================
 # SECTION 1.1: STATUS (Task Implementation)
 # =============================================================================
 
 type _Section_1_1_Status_Task_ implements _Section_1_1_Status_ {
-  # Additional fields specific to Task (base fields inherited from interface)
+  # status sections applicable to task documents
   currentState: _SectionData_StatusKey_!
   priority: _SectionData_PriorityLevel_!
   progress: Float!
@@ -16,7 +13,8 @@ type _Section_1_1_Status_Task_ implements _Section_1_1_Status_ {
   implementationStartedOn: DateTime!
   completedOn: DateTime!
 
-  parent: _Family_1_MetaGovernance_Task_! @hasInverse(field: status)
+  # task specific meta governance family
+  family: _Family_1_MetaGovernance_Task_! @hasInverse(field: status)
 }
 
 # =============================================================================
@@ -24,8 +22,8 @@ type _Section_1_1_Status_Task_ implements _Section_1_1_Status_ {
 # =============================================================================
 
 type _Section_1_2_PriorityDrivers_Task_ implements _Section_1_2_PriorityDrivers_ {
-  # Additional fields specific to Task (base fields inherited from interface)
-  parent: _Family_1_MetaGovernance_Task_! @hasInverse(field: priorityDrivers)
+  # task specific meta governance family
+  family: _Family_1_MetaGovernance_Task_! @hasInverse(field: priorityDrivers)
 }
 
 # =============================================================================
@@ -33,8 +31,7 @@ type _Section_1_2_PriorityDrivers_Task_ implements _Section_1_2_PriorityDrivers_
 # =============================================================================
 
 type _Family_1_MetaGovernance_Task_ implements _Family_1_MetaGovernance_ {
-  # Additional fields specific to Task (base fields inherited from interface)
-  # Composed directly from atomic sections
+  # task specific meta governance sections
   status: _Section_1_1_Status_Task_! @hasInverse(field: parent)
   priorityDrivers: _Section_1_2_PriorityDrivers_Task_! @hasInverse(field: parent)
 

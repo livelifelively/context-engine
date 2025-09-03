@@ -8,8 +8,8 @@
 # =============================================================================
 
 type _Section_1_3_History_Project_ implements _Section_1_3_History_ {
-  # Additional fields specific to Project (base fields inherited from interface)
-  parent: _Family_1_MetaGovernance_Project_! @hasInverse(field: history)
+  # project specific meta governance family
+  family: _Family_1_MetaGovernance_Project_! @hasInverse(field: history)
 }
 
 # =============================================================================
@@ -17,8 +17,8 @@ type _Section_1_3_History_Project_ implements _Section_1_3_History_ {
 # =============================================================================
 
 type _Family_1_MetaGovernance_Project_ implements _Family_1_MetaGovernance_ {
-  # Additional fields specific to Project (base fields inherited from interface)
-  history: _Section_1_3_History_Project_! @hasInverse(field: parent)
+  # project specific meta governance sections
+  history: _Section_1_3_History_Project_! @hasInverse(field: family)
 
   document: _Document_Project_! @hasInverse(field: metaGovernance)
 }
