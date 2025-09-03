@@ -1,34 +1,32 @@
 import { z } from 'zod';
-import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi';
-import { DocumentReference, SectionReference } from '../../../shared.schema.js';
-import { BasePriorityDriversSchema, BaseFamilySchema } from '../shared.1-meta-governance.schema.js';
+import { BasePriorityDriversSchema } from '../shared.1-meta-governance.schema.js';
+import { BaseFamilySchema } from '../../../shared.schema.js';
 import {
   getPlanSectionMetadata,
   getPlanFamilyMetadata,
-  getPlanFieldMetadata,
-} from './plan.1-meta-governance.openapi.js';
+} from './plan.1-meta-governance.meta.js';
 
-// Extend Zod with OpenAPI functionality
-extendZodWithOpenApi(z);
+
 
 // =============================================================================
 // PLAN-SPECIFIC SECTION SCHEMAS
 // =============================================================================
 
 // Section 1.2: Priority Drivers - Plan (extends base)
-export const Section_1_2_PriorityDrivers_Plan = BasePriorityDriversSchema.extend({
-  parent: SectionReference.openapi(getPlanFieldMetadata('parent')),
-}).openapi(getPlanSectionMetadata('1.2'));
+// get base priority drivers schema with field metadata
+// apply plan section metadata
+export const Section_1_2_PriorityDrivers_Plan = BasePriorityDriversSchema.meta(getPlanSectionMetadata('1.2'));
 
 // =============================================================================
 // PLAN FAMILY SCHEMA
 // =============================================================================
 
 // Family 1: Meta & Governance - Plan (extends base + sections)
+// get base family schema with field metadata
+// apply plan family metadata
 export const Family_1_MetaGovernance_Plan = BaseFamilySchema.extend({
   priorityDrivers: Section_1_2_PriorityDrivers_Plan,
-  document: DocumentReference.openapi(getPlanFieldMetadata('document')),
-}).openapi(getPlanFamilyMetadata());
+}).meta(getPlanFamilyMetadata());
 
 // =============================================================================
 // TYPE EXPORTS

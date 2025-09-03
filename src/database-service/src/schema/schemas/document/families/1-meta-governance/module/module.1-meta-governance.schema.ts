@@ -1,34 +1,32 @@
 import { z } from 'zod';
-import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi';
-import { DocumentReference, SectionReference } from '../../../shared.schema.js';
-import { BaseHistorySchema, BaseFamilySchema } from '../shared.1-meta-governance.schema.js';
+import { BaseHistorySchema } from '../shared.1-meta-governance.schema.js';
+import { BaseFamilySchema } from '../../../shared.schema.js';
 import {
   getModuleSectionMetadata,
   getModuleFamilyMetadata,
-} from './module.1-meta-governance.openapi.js';
-import { getSharedFieldMetadata } from '../shared.1-meta-governance.openapi.js';
+} from './module.1-meta-governance.meta.js';
 
-// Extend Zod with OpenAPI functionality
-extendZodWithOpenApi(z);
+
 
 // =============================================================================
 // MODULE-SPECIFIC SECTION SCHEMAS
 // =============================================================================
 
 // Section 1.3: History - Module (extends base)
-export const Section_1_3_History_Module = BaseHistorySchema.extend({
-  parent: SectionReference.openapi(getSharedFieldMetadata('parent')),
-}).openapi(getModuleSectionMetadata('1.3'));
+// get base history schema with field metadata
+// apply module section metadata
+export const Section_1_3_History_Module = BaseHistorySchema.meta(getModuleSectionMetadata('1.3'));
 
 // =============================================================================
 // MODULE FAMILY SCHEMA
 // =============================================================================
 
 // Family 1: Meta & Governance - Module (extends base + sections)
+// get base family schema with field metadata
+// apply module family metadata
 export const Family_1_MetaGovernance_Module = BaseFamilySchema.extend({
   history: Section_1_3_History_Module,
-  document: DocumentReference.openapi(getSharedFieldMetadata('document')),
-}).openapi(getModuleFamilyMetadata());
+}).meta(getModuleFamilyMetadata());
 
 // =============================================================================
 // TYPE EXPORTS

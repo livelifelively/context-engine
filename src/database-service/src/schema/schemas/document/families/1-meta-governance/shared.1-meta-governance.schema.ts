@@ -1,10 +1,8 @@
 import { z } from 'zod';
-import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi';
-import { DateTimeString, PriorityDriver, SchemaFamilyConfig, SectionReference } from '../../shared.schema.js';
+import { PriorityDriver, SchemaFamilyConfig, BaseSectionSchema } from '../../shared.schema.js';
+import { getSharedFieldMetadata } from './shared.1-meta-governance.meta.js';
 
 
-// Extend Zod with OpenAPI functionality
-extendZodWithOpenApi(z);
 
 // =============================================================================
 // FAMILY CONFIGURATION
@@ -34,34 +32,19 @@ export const META_GOVERNANCE_SECTIONS = {
 // =============================================================================
 
 // Base Status schema (shared fields)
-export const BaseStatusSchema = z
-  .object({
-    id: SectionReference,
-    createdOn: DateTimeString,
-    lastUpdatedOn: DateTimeString,
-  })
+export const BaseStatusSchema = BaseSectionSchema.extend({
+  // Additional status-specific fields can be added here
+});
 
 // Base Priority Drivers schema (shared fields)
-export const BasePriorityDriversSchema = z
-  .object({
-    id: SectionReference,
-    priorityDrivers: z.array(PriorityDriver).min(1),
-  })
+export const BasePriorityDriversSchema = BaseSectionSchema.extend({
+  priorityDrivers: z.array(PriorityDriver).min(1).meta(getSharedFieldMetadata('priorityDrivers')),
+});
 
 // Base History schema (shared fields)
-export const BaseHistorySchema = z
-  .object({
-    id: SectionReference,
-    taskDocuments: z.array(z.string().min(1)).min(1),
-  })
-
-// Base Family schema (shared fields)
-export const BaseFamilySchema = z
-  .object({
-    id: SectionReference,
-    createdOn: DateTimeString,
-    lastUpdatedOn: DateTimeString,
-  })
+export const BaseHistorySchema = BaseSectionSchema.extend({
+  taskDocuments: z.array(z.string().min(1)).min(1).meta(getSharedFieldMetadata('taskDocuments')),
+});
 
 // =============================================================================
 // UTILITY FUNCTIONS
