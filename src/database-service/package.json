@@ -48,7 +48,8 @@
   },
   "homepage": "https://github.com/livelifelively/context-engine-server#readme",
   "dependencies": {
-    "dotenv": "^17.2.1"
+    "dotenv": "^17.2.1",
+    "zod": "^4.1.5"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",
