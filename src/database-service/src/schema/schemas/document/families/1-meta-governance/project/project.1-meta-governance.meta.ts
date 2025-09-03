@@ -3,12 +3,12 @@
 // =============================================================================
 
 import { SectionSchemaId } from '../../../shared.schema.js';
-import { getFamilyDocumentMetadata, getSectionContentFormatAndExamples } from '../shared.1-meta-governance.meta.js';
+import { getFamilyDocumentMetadata, getBaseSectionMetadata } from '../shared.1-meta-governance.meta.js';
 
 // Project-specific section metadata
 // can extend these with specific metadata for the project document type
 export const Section_1_3_History_Project_Metadata = {
-  ...getSectionContentFormatAndExamples('1.3'),
+  ...getBaseSectionMetadata('1.3'),
 }
 
 // Project-specific field metadata. 

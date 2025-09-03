@@ -3,12 +3,12 @@
 // =============================================================================
 
 import { SectionSchemaId } from '../../../shared.schema.js';
-import { getFamilyDocumentMetadata, getSectionContentFormatAndExamples } from '../shared.1-meta-governance.meta.js';
+import { getFamilyDocumentMetadata, getBaseSectionMetadata } from '../shared.1-meta-governance.meta.js';
 
 // Plan-specific section metadata
 // can extend these with specific metadata for the plan document type
 export const Section_1_2_PriorityDrivers_Plan_Metadata = {
-  ...getSectionContentFormatAndExamples('1.2'),
+  ...getBaseSectionMetadata('1.2'),
 }
 
 // Plan-specific field metadata. 

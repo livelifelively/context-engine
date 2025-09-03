@@ -2,13 +2,13 @@
 // FEATURE-SPECIFIC METADATA
 // =============================================================================
 
-import { getFamilyDocumentMetadata, getSectionContentFormatAndExamples } from '../shared.1-meta-governance.meta.js';
+import { getFamilyDocumentMetadata, getBaseSectionMetadata } from '../shared.1-meta-governance.meta.js';
 import { SectionSchemaId } from '../../../shared.schema.js';
 
 // Feature-specific section metadata
 // can extend these with specific metadata for the feature document type
 export const Section_1_3_History_Feature_Metadata = {
-  ...getSectionContentFormatAndExamples('1.3'),
+  ...getBaseSectionMetadata('1.3'),
 }
 
 // Feature-specific field metadata. 
