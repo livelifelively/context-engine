@@ -13,8 +13,10 @@
  * - Trigger regeneration when composition changes
  */
 
-import { FAMILY_1_META_GOVERNANCE } from './families/1-meta-governance/family-1-meta-governance.js';
-import { SECTION_1_1_STATUS } from './families/1-meta-governance/sections/1.1-status.js';
+import { family_1_meta_governance } from './families/1-meta-governance/family-1-meta-governance.js';
+import { section_1_1_status } from './families/1-meta-governance/sections/1.1-status.js';
+import { section_1_2_priority_drivers } from './families/1-meta-governance/sections/1.2-priority-drivers.js';
+import { section_1_3_history } from './families/1-meta-governance/sections/1.3-history.js';
 
 export const DOCUMENT_COMPOSITION = {
   // =============================================================================
@@ -24,8 +26,8 @@ export const DOCUMENT_COMPOSITION = {
   Plan: [
     {
       name: "metaGovernance",
-      familyId: FAMILY_1_META_GOVERNANCE,
-      sections: [],
+      family: family_1_meta_governance,
+      sections: [section_1_1_status, section_1_2_priority_drivers],
     }
   ],
   
@@ -36,8 +38,8 @@ export const DOCUMENT_COMPOSITION = {
   Task: [
     {
       name: "metaGovernance",
-      familyId: FAMILY_1_META_GOVERNANCE,
-      sections: [SECTION_1_1_STATUS],
+      family: family_1_meta_governance,
+      sections: [section_1_2_priority_drivers],
     }
   ],
   
@@ -48,8 +50,8 @@ export const DOCUMENT_COMPOSITION = {
   Project: [
     {
       name: "metaGovernance",
-      familyId: FAMILY_1_META_GOVERNANCE,
-      sections: [],
+      family: family_1_meta_governance,
+      sections: [section_1_3_history],
     }
   ],
   
@@ -60,8 +62,8 @@ export const DOCUMENT_COMPOSITION = {
   Module: [
     {
       name: "metaGovernance",
-      familyId: FAMILY_1_META_GOVERNANCE,
-      sections: [],
+      family: family_1_meta_governance,
+      sections: [section_1_3_history],
     }
   ],
   
@@ -72,8 +74,8 @@ export const DOCUMENT_COMPOSITION = {
   Feature: [
     {
       name: "metaGovernance",
-      familyId: FAMILY_1_META_GOVERNANCE,
-      sections: [],
+      family: family_1_meta_governance,
+      sections: [section_1_3_history],
     }
   ]
 } as const;
@@ -86,6 +88,6 @@ export type DocumentType = keyof typeof DOCUMENT_COMPOSITION;
 export type DocumentComposition = typeof DOCUMENT_COMPOSITION[DocumentType];
 export type FamilyComposition = {
   name: string;
-  familyId: string;
-  sections: string[];
+  family: any; // Reference to family data object
+  sections: any[]; // Array of section data objects
 };
