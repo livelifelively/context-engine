@@ -1,0 +1,25 @@
+# Family 1: Meta & Governance - Feature Document Type
+
+# Import shared types and interfaces
+#import "../shared.1-meta-governance.graphql"
+
+# =============================================================================
+# SECTION 1.3: HISTORY (Feature Implementation)
+# =============================================================================
+
+type _Section_1_3_History_Feature_ implements _Section_1_3_History_ {
+  # feature specific meta governance family
+  family: _Family_1_MetaGovernance_Feature_! @hasInverse(field: history)
+}
+
+# =============================================================================
+# FAMILY: Meta & Governance - Feature (Composed)
+# =============================================================================
+
+type _Family_1_MetaGovernance_Feature_ implements _Family_1_MetaGovernance_ {
+  # feature specific meta governance sections
+  history: _Section_1_3_History_Feature_! @hasInverse(field: family)
+
+  # feature specific meta governance document
+  document: _Document_Feature_! @hasInverse(field: metaGovernance)
+}

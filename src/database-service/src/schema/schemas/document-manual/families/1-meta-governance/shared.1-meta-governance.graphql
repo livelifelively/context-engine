@@ -1,0 +1,53 @@
+# Family 1: Meta & Governance - Shared Types
+
+# =============================================================================
+# SECTIONS INTERFACES
+# =============================================================================
+
+# all the generic fields, that are applicable to all sections of the meta governance family
+
+# Base interface for Status sections
+interface _Section_1_1_Status_ {
+  id: ID!
+
+  # the creation and last update timestamps for the section
+  sectionCreatedOn: DateTime
+  sectionLastUpdatedOn: DateTime
+}
+
+# Base interface for Priority Drivers sections
+interface _Section_1_2_PriorityDrivers_ {
+  id: ID!
+
+  # the priority drivers are the same for all applicable sections
+  priorityDrivers: [_SectionData_PriorityDriver_!]!
+
+  # the creation and last update timestamps for the section
+  sectionCreatedOn: DateTime
+  sectionLastUpdatedOn: DateTime
+}
+
+# Base interface for History sections
+interface _Section_1_3_History_ {
+  id: ID!
+
+  # only task documents are allowed and linked in the history section
+  taskDocuments: [_Document_Task_!]!
+  
+  # the creation and last update timestamps for the section
+  sectionCreatedOn: DateTime
+  sectionLastUpdatedOn: DateTime
+}
+
+# =============================================================================
+# FAMILY INTERFACES
+# =============================================================================
+
+# Base interface for Meta & Governance family
+interface _Family_1_MetaGovernance_ {
+  id: ID!
+
+  # the creation and last update timestamps for the family
+  familyCreatedOn: DateTime
+  familyLastUpdatedOn: DateTime
+}

@@ -1,0 +1,39 @@
+# Family 1: Meta & Governance - Task Document Type
+
+# =============================================================================
+# SECTION 1.1: STATUS (Task Implementation)
+# =============================================================================
+
+type _Section_1_1_Status_Task_ implements _Section_1_1_Status_ {
+  # status sections applicable to task documents
+  currentState: _SectionData_StatusKey_!
+  priority: _SectionData_PriorityLevel_!
+  progress: Float!
+  planningEstimate: Float!
+  implementationStartedOn: DateTime!
+  completedOn: DateTime!
+
+  # task specific meta governance family
+  family: _Family_1_MetaGovernance_Task_! @hasInverse(field: status)
+}
+
+# =============================================================================
+# SECTION 1.2: PRIORITY DRIVERS (Task Implementation)
+# =============================================================================
+
+type _Section_1_2_PriorityDrivers_Task_ implements _Section_1_2_PriorityDrivers_ {
+  # task specific meta governance family
+  family: _Family_1_MetaGovernance_Task_! @hasInverse(field: priorityDrivers)
+}
+
+# =============================================================================
+# FAMILY: Meta & Governance - Task (Composed)
+# =============================================================================
+
+type _Family_1_MetaGovernance_Task_ implements _Family_1_MetaGovernance_ {
+  # task specific meta governance sections
+  status: _Section_1_1_Status_Task_! @hasInverse(field: parent)
+  priorityDrivers: _Section_1_2_PriorityDrivers_Task_! @hasInverse(field: parent)
+
+  document: _Document_Task_! @hasInverse(field: metaGovernance)
+}

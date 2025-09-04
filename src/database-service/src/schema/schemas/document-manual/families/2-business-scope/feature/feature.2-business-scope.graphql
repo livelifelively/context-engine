@@ -1,0 +1,92 @@
+# Family 2: Business & Scope - Feature Document Type
+
+# =============================================================================
+# SECTION 2.1: OVERVIEW - FEATURE TYPES
+# =============================================================================
+
+type _Section_2_1_Overview_Feature_ implements _Section_2_1_Overview_ {
+  id: ID!
+  family: _Family_2_BusinessScope_Feature_! @hasInverse(field: overview)
+}
+
+# =============================================================================
+# SECTION 2.2: BUSINESS CONTEXT - FEATURE TYPES
+# =============================================================================
+
+type _Section_2_2_BusinessContext_Feature_ implements _Section_2_2_BusinessContext_ {
+  id: ID!
+  family: _Family_2_BusinessScope_Feature_! @hasInverse(field: businessContext)
+}
+
+type _Section_2_2_1_UserPersona_Feature_ implements _Section_2_2_1_UserPersona_ {
+  id: ID!
+
+  # User personas with feature-specific relationship
+  personas: [_SectionData_UserPersona_!]!
+  family: _Family_2_BusinessScope_Feature_! @hasInverse(field: userPersonas)
+}
+
+type _Section_2_2_2_BusinessRule_Feature_ implements _Section_2_2_2_BusinessRule_ {
+  id: ID!
+
+  # Core business rules with feature-specific relationship
+  coreBusinessRules: [_SectionData_BusinessRule_!]!
+  family: _Family_2_BusinessScope_Feature_! @hasInverse(field: coreBusinessRules)
+}
+
+type _Section_2_2_3_UserStory_Feature_ implements _Section_2_2_3_UserStory_ {
+  id: ID!
+
+  # User stories with feature-specific relationship
+  userStories: [_SectionData_UserStory_!]!
+  family: _Family_2_BusinessScope_Feature_! @hasInverse(field: userStories)
+}
+
+type _Section_2_2_4_UserJourney_Feature_ implements _Section_2_2_4_UserJourney_ {
+  id: ID!
+
+  # User journeys with feature-specific relationship
+  userJourneys: [_SectionData_UserJourney_!]!
+  family: _Family_2_BusinessScope_Feature_! @hasInverse(field: userJourneys)
+}
+
+# =============================================================================
+# SECTION 2.6: CORE BUSINESS PROCESSES - FEATURE TYPES
+# =============================================================================
+
+type _Section_2_6_CoreBusinessProcesses_Feature_ implements _Section_2_6_CoreBusinessProcesses_ {
+  id: ID!
+  family: _Family_2_BusinessScope_Feature_! @hasInverse(field: coreBusinessProcesses)
+
+  # Core business processes with feature-specific relationship
+  processes: [_Section_2_6_1_BusinessProcess_Feature_!]! @hasInverse(field: coreBusinessProcesses)
+}
+
+type _Section_2_6_1_BusinessProcess_Feature_ implements _SectionData_BusinessProcess_ {
+  id: String!
+
+  steps: [_SectionData_ProcessStep_!]!
+  coreBusinessProcesses: _Section_2_6_CoreBusinessProcesses_Feature_! @hasInverse(field: processes)
+}
+
+
+# =============================================================================
+# FEATURE FAMILY IMPLEMENTATION
+# =============================================================================
+
+type _Family_2_BusinessScope_Feature_ implements _Family_2_BusinessScope_ {
+  id: ID!
+
+  # Composed directly from atomic sections
+  overview: _Section_2_1_Overview_Feature_! @hasInverse(field: family)
+  
+  businessContext: _Section_2_2_BusinessContext_Feature_! @hasInverse(field: businessContext)
+  userPersonas: _Section_2_2_1_UserPersona_Feature_! @hasInverse(field: family)
+  coreBusinessRules: _Section_2_2_2_BusinessRule_Feature_! @hasInverse(field: family)
+  userStories: _Section_2_2_3_UserStory_Feature_! @hasInverse(field: family)
+  userJourneys: _Section_2_2_4_UserJourney_Feature_! @hasInverse(field: family)
+  
+  coreBusinessProcesses: _Section_2_6_CoreBusinessProcesses_Feature_! @hasInverse(field: family)
+
+  document: _Document_Feature_! @hasInverse(field: businessScope)
+}

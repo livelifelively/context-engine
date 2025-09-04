@@ -1,0 +1,24 @@
+# Family 1: Meta & Governance - Module Document Type
+
+# Import shared types and interfaces
+#import "../shared.1-meta-governance.graphql"
+
+# =============================================================================
+# SECTION 1.3: HISTORY (Module Implementation)
+# =============================================================================
+
+type _Section_1_3_History_Module_ implements _Section_1_3_History_ {
+  # module specific meta governance family
+  family: _Family_1_MetaGovernance_Module_! @hasInverse(field: history)
+}
+
+# =============================================================================
+# FAMILY: Meta & Governance - Module (Composed)
+# =============================================================================
+
+type _Family_1_MetaGovernance_Module_ implements _Family_1_MetaGovernance_ {
+  # module specific meta governance sections
+  history: _Section_1_3_History_Module_! @hasInverse(field: parent)
+
+  document: _Document_Module_! @hasInverse(field: metaGovernance)
+}
