@@ -33,6 +33,10 @@ export interface SectionData {
   name: string;
   description: string;
   interfaceName: string;
+  businessPurpose: string;
+  validationRules: readonly string[];
+  usageGuidelines: readonly string[];
+  aiInstructions: readonly string[];
   fields: Record<string, FieldDefinition>;
 }
 
@@ -42,6 +46,10 @@ export interface FamilyData {
   version: string;
   description: string;
   interfaceName: string;
+  businessPurpose: string;
+  validationRules: readonly string[];
+  usageGuidelines: readonly string[];
+  aiInstructions: readonly string[];
   fields: Record<string, FieldDefinition>;
   documentTypes: Record<string, {
     name: string;
