@@ -1,0 +1,270 @@
+# Family 2: Business & Scope - Shared Types
+
+# =============================================================================
+# SHARED ENUMS
+# =============================================================================
+
+enum _SectionData_BusinessRule_Category_ {
+  DOMAIN_RULE
+  IMPLEMENTATION_CONSTRAINT
+  COMPLIANCE_REQUIREMENT
+  PERFORMANCE_REQUIREMENT
+  SECURITY_REQUIREMENT
+}
+
+enum _SectionData_DoneCriterion_Category_ {
+  FUNCTIONALITY
+  QUALITY
+  DOCUMENTATION
+  TESTING
+  DEPLOYMENT
+}
+
+enum _SectionData_Scope_Item_Category_ {
+  FUNCTIONALITY
+  FEATURE
+  OUTCOME
+  INTEGRATION
+  DATA
+}
+
+# =============================================================================
+# SHARED DATA TYPES
+# =============================================================================
+
+interface _SectionData_DoneCriterion_ {
+  id: ID!
+
+  # referenced within the document e.g. DoD-1
+  inDocumentId: String
+
+  description: String!
+  category: _SectionData_DoneCriterion_Category_!
+
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+interface _SectionData_Scope_Item_ {
+  id: ID!
+
+  description: String!
+  category: _SectionData_Scope_Item_Category_!
+
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+interface _SectionData_BusinessProcess_ {
+  id: String!
+  name: String!
+  description: String!
+  participants: [_SectionData_Actor_!]!
+  goal: String!
+  
+  diagram: _SectionData_MermaidDiagram_
+
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+
+interface _SectionData_ProcessStep_ {
+  id: String!
+
+  order: Int!
+  description: String!
+  actors: [_SectionData_Actor_!]!
+
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+# =============================================================================
+# SECTION INTERFACES SHARED ACROSS ALL DOCUMENT TYPES
+# =============================================================================
+
+# =============================================================================
+# SECTION 2.1: OVERVIEW
+# =============================================================================
+
+# Base interface for Overview sections
+interface _Section_2_1_Overview_ {
+  id: ID!
+
+  coreFunction: String!
+  keyCapability: String!
+  businessValue: String!
+
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+# =============================================================================
+# SECTION 2.2: BUSINESS CONTEXT
+# =============================================================================
+
+# Base interface for Business Context sections
+interface _Section_2_2_BusinessContext_ {
+  id: ID!
+
+  # Business context narrative
+  narrative: String!
+
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+interface _Section_2_2_1_UserPersona_ {
+  id: ID!
+
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+type _SectionData_UserPersona_ {
+  id: ID!
+  
+  name: String!
+  goal: String!
+
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+interface _Section_2_2_2_BusinessRule_ {
+  id: ID!
+
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+type _SectionData_BusinessRule_ {
+  id: ID!
+
+  rule: String!
+  category: _SectionData_BusinessRule_Category_!
+  
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+interface _Section_2_2_3_UserStory_ {
+  id: ID!
+
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+type _SectionData_UserStory_ {
+  id: ID!
+
+  persona: _SectionData_UserPersona_!
+  action: String!
+
+  goal: String!
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+interface _Section_2_2_4_UserJourney_ {
+  id: ID!
+
+  persona: _SectionData_UserPersona_!
+
+  description: String!
+  diagram: _SectionData_MermaidDiagram_!
+
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+type _SectionData_UserJourney_ {
+  id: ID!
+
+  persona: _SectionData_UserPersona_!
+  description: String!
+  diagram: _SectionData_MermaidDiagram_!
+  
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+# =============================================================================
+# SECTION 2.3: SUCCESS CRITERIA
+# =============================================================================
+
+# Base interface for Success Criteria sections
+interface _Section_2_3_SuccessCriteria_ {
+  id: ID!
+
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+interface _Section_2_3_1_SuccessCriterion_ {
+  id: String!
+
+  description: String!
+  measurable: Boolean!
+  target: String
+
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+# =============================================================================
+# SECTION 2.4: DEFINITION OF DONE
+# =============================================================================
+
+# Base interface for Definition of Done sections
+interface _Section_2_4_DefinitionOfDone_ {
+  id: ID!
+
+  # Definition of Done criteria
+  criteria: [_SectionData_DoneCriterion_!]! @hasInverse(field: definitionOfDone)
+
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+# =============================================================================
+# SECTION 2.5: BOUNDARIES & SCOPE
+# =============================================================================
+
+# Base interface for Boundaries & Scope sections
+interface _Section_2_5_BoundariesScope_ {
+  id: ID!
+
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+# =============================================================================
+# SECTION 2.6: CORE BUSINESS PROCESSES
+# =============================================================================
+
+# Base interface for Core Business Processes sections
+interface _Section_2_6_CoreBusinessProcesses_ {
+  id: ID!
+
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
+
+# =============================================================================
+# SECTION 2.3: SUCCESS CRITERIA
+# =============================================================================
+
+
+
+# =============================================================================
+# FAMILY INTERFACE
+# =============================================================================
+
+# Base interface for Business & Scope family
+interface _Family_2_BusinessScope_ {
+  id: ID!
+  createdOn: DateTime
+  lastUpdatedOn: DateTime
+}
