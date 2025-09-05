@@ -50,13 +50,8 @@ export interface FamilyData {
   validationRules: readonly string[];
   usageGuidelines: readonly string[];
   aiInstructions: readonly string[];
+  questionsItAnswers: readonly string[];
   fields: Record<string, FieldDefinition>;
-  documentTypes: Record<string, {
-    name: string;
-    label: string;
-    sections: readonly string[];
-    relationships: Record<string, any>;
-  }>;
 }
 
 // =============================================================================

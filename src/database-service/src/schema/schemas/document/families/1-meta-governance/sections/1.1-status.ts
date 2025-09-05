@@ -41,6 +41,16 @@ export const section_1_1_status = {
   
   // Section-level metadata
   businessPurpose: "Enables humans and AI systems to know the current status of task, identify blockers and track development velocity",
+
+  questionsItAnswers: [
+    "What is the current status of the task?",
+    "What is the priority of the task?",
+    "What is the current progress of the task?",
+    "What is the planning estimate of the task?",
+    "How many story points is the task?",
+    "What is the implementation started on of the task?",
+    "When was the task completed?",
+  ],
   
   validationRules: [
     "Must follow markdown format",
@@ -113,6 +123,7 @@ export const section_1_1_status = {
       metadata: {
         description: "Unique identifier for the status section",
         businessPurpose: "Enables unique identification and referencing",
+        questionsItAnswers: ["What is the id of the status section in the database?"],
         validationRules: ["Must be a valid string"]
       }
     },
@@ -128,6 +139,7 @@ export const section_1_1_status = {
       metadata: {
         description: "Timestamp when the status section was created",
         businessPurpose: "Provides audit trail and creation tracking",
+        questionsItAnswers: ["What is the created on date of the status section?"],
         validationRules: ["Must be a valid date"],
         examples: ["2024-01-15T09:00:00Z"]
       }
@@ -144,6 +156,7 @@ export const section_1_1_status = {
       metadata: {
         description: "Timestamp when the status section was last updated",
         businessPurpose: "Enables change tracking and freshness monitoring",
+        questionsItAnswers: ["What is the last updated on date of the status section?"],
         validationRules: ["Must be a valid date"],
         examples: ["2024-01-15T14:30:00Z"]
       }
@@ -160,6 +173,7 @@ export const section_1_1_status = {
       metadata: {
         description: "Current execution state",
         businessPurpose: "Provides immediate visibility into progress",
+        questionsItAnswers: ["What is the current state of the status section?"],
         validationRules: ["Must be a valid StatusKey enum value"],
         examples: ["NOT_STARTED", "IN_PROGRESS", "BLOCKED", "COMPLETED"]
       }
@@ -176,6 +190,7 @@ export const section_1_1_status = {
       metadata: {
         description: "Priority level",
         businessPurpose: "Helps with resource allocation and scheduling decisions",
+        questionsItAnswers: ["What is the priority of the status section?"],
         validationRules: ["Must be a valid PriorityLevel enum value"],
         examples: ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
       }
@@ -192,6 +207,7 @@ export const section_1_1_status = {
       metadata: {
         description: "Completion percentage (0-100)",
         businessPurpose: "Provides quantitative progress tracking",
+        questionsItAnswers: ["What is the progress of the status section?"],
         validationRules: ["Must be integer between 0 and 100"],
         examples: [0, 25, 50, 75, 100]
       }
@@ -208,6 +224,10 @@ export const section_1_1_status = {
       metadata: {
         description: "Estimated effort in story points or hours",
         businessPurpose: "Enables capacity planning and velocity tracking",
+        questionsItAnswers: [
+          "What is the planning estimate of the status section?", 
+          "How many story points is the task?"
+        ],
         validationRules: ["Must be positive integer"],
         examples: [1, 3, 5, 8, 13]
       }
@@ -224,6 +244,10 @@ export const section_1_1_status = {
       metadata: {
         description: "When implementation began",
         businessPurpose: "Tracks actual start time for velocity calculations",
+        questionsItAnswers: [
+          "What is the implementation started on date of the status section?", 
+          "When was the implementation started on?"
+        ],
         validationRules: ["Must be a valid date"],
         examples: ["2024-01-15T09:00:00Z"]
       }
@@ -240,6 +264,7 @@ export const section_1_1_status = {
       metadata: {
         description: "When task was completed",
         businessPurpose: "Tracks completion time for velocity and cycle time analysis",
+        questionsItAnswers: ["What is the completed on date of the status section?", "When was the task completed?"],
         validationRules: ["Must be a valid date"],
         examples: ["2024-01-15T16:45:00Z"]
       }
@@ -256,6 +281,7 @@ export const section_1_1_status = {
       metadata: {
         description: "Reference to the parent family",
         businessPurpose: "Establishes the relationship between section and family",
+        questionsItAnswers: ["What is the family of the status section?"],
         validationRules: ["Must be a valid family reference"]
       }
     }
