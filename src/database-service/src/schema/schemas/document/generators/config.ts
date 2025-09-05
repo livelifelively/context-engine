@@ -1,6 +1,6 @@
 /**
  * Generator Configuration
- * 
+ *
  * This file contains configuration options for the schema generators,
  * making it easy to customize output paths and other settings.
  */
@@ -16,10 +16,10 @@ export interface GeneratorConfig {
 
 export const DEFAULT_CONFIG: GeneratorConfig = {
   graphql: {
-    outputPath: 'src/database-service/src/schema/schemas/document/dist/graphql',
+    outputPath: '../dist/graphql',
   },
   zod: {
-    outputPath: 'src/database-service/src/schema/schemas/document/dist/zod',
+    outputPath: '../dist/zod',
   },
 };
 
