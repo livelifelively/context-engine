@@ -31,6 +31,9 @@
     "test:schema": "vitest run src/schema/scripts/__tests__/",
     "test:schema:watch": "vitest src/schema/scripts/__tests__/",
     "test:schema:coverage": "vitest run --coverage src/schema/scripts/__tests__/",
+    "test:metadata": "vitest run src/schema/schemas/document/tests/",
+    "test:metadata:watch": "vitest src/schema/schemas/document/tests/",
+    "test:metadata:coverage": "vitest run --coverage src/schema/schemas/document/tests/",
     "test:all": "vitest run",
     "test:all:watch": "vitest",
     "test:all:coverage": "vitest run --coverage"
