@@ -18,6 +18,7 @@
     "test:db": "cd src/database-service && npm test",
     "test:api": "cd src/api-server && npm test",
     "build": "npm run build:db && npm run build:api",
+    "generate:schemas": "cd src/database-service/src/schema/schemas/document/families/2-business-scope && npx tsx generate-schemas-generic.ts",
     "build:db": "cd src/database-service && npm run build",
     "build:api": "cd src/api-server && npm run build",
     "install:all": "npm install && cd src/database-service && npm install && cd ../api-server && npm install",
@@ -52,6 +53,7 @@
   "homepage": "https://github.com/livelifelively/context-engine-server#readme",
   "devDependencies": {
     "@types/node": "^24.3.0",
+    "prettier": "^3.6.2",
     "typescript": "^5.3.2"
   }
 }

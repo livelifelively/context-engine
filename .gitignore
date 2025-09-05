@@ -152,7 +152,7 @@ logs/*.log
 
 /test-project-e2e/
 
-# /reference-docs/
+/reference-docs/
 
 # Docker data and volumes
 docker-data/
