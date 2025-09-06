@@ -1,8 +1,16 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import { GRAPHQL_TYPES } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 4.3: Components
 export const SECTION_4_3_COMPONENTS = '4.3' as const;
+export const SECTION_NAME = 'components' as const;
 
 export const section_4_3_components = {
   id: SECTION_4_3_COMPONENTS,
@@ -68,63 +76,11 @@ export const section_4_3_components = {
     'Provide context for why current component decisions were made',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the components section',
-        applicability: {
-          plan: 'required',
-          task: 'omitted',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the components section was created',
-        applicability: {
-          plan: 'required',
-          task: 'omitted',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the components section was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'omitted',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     components: {
       name: 'components',
       label: 'Components',
@@ -182,24 +138,6 @@ export const section_4_3_components = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_4_CurrentArchitecture_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent current architecture family',
-        applicability: {
-          plan: 'required',
-          task: 'omitted',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_4_CURRENT_ARCHITECTURE, SECTION_NAME),
   },
 } as const;

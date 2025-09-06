@@ -1,8 +1,16 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 4.1: Guiding Principles
 export const SECTION_4_1_GUIDING_PRINCIPLES = '4.1' as const;
+export const SECTION_NAME = 'guiding principles' as const;
 
 export const section_4_1_guiding_principles = {
   id: SECTION_4_1_GUIDING_PRINCIPLES,
@@ -63,63 +71,11 @@ export const section_4_1_guiding_principles = {
     'Provide context for why these principles exist in the current system',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the guiding principles section',
-        applicability: {
-          plan: 'required',
-          task: 'omitted',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the guiding principles section was created',
-        applicability: {
-          plan: 'required',
-          task: 'omitted',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the guiding principles section was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'omitted',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     principles: {
       name: 'principles',
       label: 'Principles',
@@ -139,24 +95,6 @@ export const section_4_1_guiding_principles = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_4_CurrentArchitecture_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent current architecture family',
-        applicability: {
-          plan: 'required',
-          task: 'omitted',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_4_CURRENT_ARCHITECTURE, SECTION_NAME),
   },
 } as const;

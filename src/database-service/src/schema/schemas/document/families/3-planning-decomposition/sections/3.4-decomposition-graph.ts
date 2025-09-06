@@ -12,13 +12,21 @@
  */
 
 import { z } from 'zod';
-import { GRAPHQL_TYPES } from '../../../constants.js';
+
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // =============================================================================
 // SECTION IDENTIFIER
 // =============================================================================
 
 export const SECTION_3_4_DECOMPOSITION_GRAPH = '3.4' as const;
+export const SECTION_NAME = 'decomposition graph' as const;
 
 // =============================================================================
 // DATA TYPE DEFINITIONS
@@ -117,55 +125,11 @@ export const section_3_4_decomposition_graph = {
   // =============================================================================
 
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.ID,
-        required: true,
-      },
-      zod: z.string().optional(),
-      metadata: {
-        description: 'Unique identifier for the decomposition graph section',
-        businessPurpose: 'Enables unique identification and referencing',
-        questionsItAnswers: ['What is the id of the decomposition graph section in the database?'],
-        validationRules: ['Must be a valid string'],
-      },
-    },
+    id: createIdField(SECTION_NAME),
 
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.DATETIME_OPTIONAL,
-        required: false,
-      },
-      zod: z.date().optional(),
-      metadata: {
-        description: 'Timestamp when the decomposition graph section was created',
-        businessPurpose: 'Provides audit trail and creation tracking',
-        questionsItAnswers: ['What is the created on date of the decomposition graph section?'],
-        validationRules: ['Must be a valid date'],
-        examples: ['2024-01-15T09:00:00Z'],
-      },
-    },
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
 
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.DATETIME_OPTIONAL,
-        required: false,
-      },
-      zod: z.date().optional(),
-      metadata: {
-        description: 'Timestamp when the decomposition graph section was last updated',
-        businessPurpose: 'Enables change tracking and freshness monitoring',
-        questionsItAnswers: ['What is the last updated on date of the decomposition graph section?'],
-        validationRules: ['Must be a valid date'],
-        examples: ['2024-01-15T14:30:00Z'],
-      },
-    },
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
 
     decompositionGraph: {
       name: 'decompositionGraph',
@@ -199,21 +163,7 @@ export const section_3_4_decomposition_graph = {
       },
     },
 
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_3_PlanningDecomposition_',
-        required: true,
-      },
-      zod: z.string(),
-      metadata: {
-        description: 'Reference to the parent family',
-        businessPurpose: 'Establishes the relationship between section and family',
-        questionsItAnswers: ['What is the family of the decomposition graph section?'],
-        validationRules: ['Must be a valid family reference'],
-      },
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_3_PLANNING_DECOMPOSITION, SECTION_NAME),
   },
 } as const;
 

@@ -11,14 +11,19 @@
  * breakdown of work, implementation sequence, and dependencies.
  */
 
-import { z } from 'zod';
-import { GRAPHQL_TYPES } from '../../constants.js';
+import {
+  createFamilyIdField,
+  createFamilyCreatedOnField,
+  createFamilyLastUpdatedOnField,
+  createDocumentReferenceField,
+} from '../../field-factories.js';
 
 // =============================================================================
 // FAMILY IDENTIFIER
 // =============================================================================
 
 export const FAMILY_3_PLANNING_DECOMPOSITION = '3-planning-decomposition' as const;
+export const FAMILY_NAME = 'planning & decomposition' as const;
 
 export const family_3_planning_decomposition = {
   // =============================================================================
@@ -130,71 +135,13 @@ export const family_3_planning_decomposition = {
   // =============================================================================
 
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.ID,
-        required: true,
-      },
-      zod: z.string().optional(),
-      metadata: {
-        description: 'Unique identifier for the planning & decomposition family',
-        businessPurpose: 'Enables unique identification and referencing',
-        questionsItAnswers: ['What is the id of the planning & decomposition family in the database?'],
-        validationRules: ['Must be a valid string'],
-      },
-    },
+    id: createFamilyIdField(FAMILY_NAME),
 
-    familyCreatedOn: {
-      name: 'familyCreatedOn',
-      label: 'Family Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.DATETIME_OPTIONAL,
-        required: false,
-      },
-      zod: z.date().optional(),
-      metadata: {
-        description: 'Timestamp when the planning & decomposition family was created',
-        businessPurpose: 'Provides audit trail and creation tracking',
-        questionsItAnswers: ['What is the created on date of the planning & decomposition family?'],
-        validationRules: ['Must be a valid date'],
-        examples: ['2024-01-15T09:00:00Z'],
-      },
-    },
+    familyCreatedOn: createFamilyCreatedOnField(FAMILY_NAME),
 
-    familyLastUpdatedOn: {
-      name: 'familyLastUpdatedOn',
-      label: 'Family Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.DATETIME_OPTIONAL,
-        required: false,
-      },
-      zod: z.date().optional(),
-      metadata: {
-        description: 'Timestamp when the planning & decomposition family was last updated',
-        businessPurpose: 'Enables change tracking and freshness monitoring',
-        questionsItAnswers: ['What is the last updated on date of the planning & decomposition family?'],
-        validationRules: ['Must be a valid date'],
-        examples: ['2024-01-15T14:30:00Z'],
-      },
-    },
+    familyLastUpdatedOn: createFamilyLastUpdatedOnField(FAMILY_NAME),
 
-    document: {
-      name: 'document',
-      label: 'Document',
-      graphql: {
-        type: '_Document_',
-        required: true,
-      },
-      zod: z.string(),
-      metadata: {
-        description: 'Reference to the parent document',
-        businessPurpose: 'Establishes the relationship between family and document',
-        questionsItAnswers: ['What is the document of the planning & decomposition family?'],
-        validationRules: ['Must be a valid document reference'],
-      },
-    },
+    document: createDocumentReferenceField(FAMILY_NAME),
   },
 } as const;
 

@@ -1,8 +1,16 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import { GRAPHQL_TYPES } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 4.5: Control Flow
 export const SECTION_4_5_CONTROL_FLOW = '4.5' as const;
+export const SECTION_NAME = 'control flow' as const;
 
 export const section_4_5_control_flow = {
   id: SECTION_4_5_CONTROL_FLOW,
@@ -70,236 +78,66 @@ export const section_4_5_control_flow = {
     'Provide context for why current control flow decisions were made',
   ],
   fields: {
-    id: {
-
-      name: 'id',
-
-      label: 'Id',
-
-      graphql: {
-
-        type: GRAPHQL_TYPES.STRING,
-
-        required: true,
-
-      },
-
-      zod: z.string().min(1),
-
-      metadata: {
-
-        description: 'Unique identifier for the control flow section',
-
-        applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
-        },
-
-      },
-
-    },
-    sectionCreatedOn: {
-
-      name: 'sectionCreatedOn',
-
-      label: 'Section Created On',
-
-      graphql: {
-
-        type: GRAPHQL_TYPES.STRING,
-
-        required: true,
-
-      },
-
-      zod: z.string().datetime(),
-
-      metadata: {
-
-        description: 'Timestamp when the control flow section was created',
-
-        applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
-        },
-
-      },
-
-    },
-    sectionLastUpdatedOn: {
-
-      name: 'sectionLastUpdatedOn',
-
-      label: 'Section Last Updated On',
-
-      graphql: {
-
-        type: GRAPHQL_TYPES.STRING,
-
-        required: true,
-
-      },
-
-      zod: z.string().datetime(),
-
-      metadata: {
-
-        description: 'Timestamp when the control flow section was last updated',
-
-        applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
-        },
-
-      },
-
-    },
+    id: createIdField(SECTION_NAME),
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     controlFlow: {
-
       name: 'controlFlow',
-
       label: 'Control Flow',
-
       graphql: {
-
         type: GRAPHQL_TYPES.STRING,
-
         required: true,
-
       },
-
       zod: z.string().min(1),
-
       metadata: {
-
         description: 'Description of current control flow patterns through the system',
-
         applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
+          plan: 'required',
+          task: 'omitted',
+          project: 'required',
+          module: 'required',
+          feature: 'required',
         },
-
       },
-
     },
     systemInteractions: {
-
       name: 'systemInteractions',
-
       label: 'System Interactions',
-
       graphql: {
-
         type: GRAPHQL_TYPES.STRING,
-
         required: true,
-
       },
-
       zod: z.string().min(1),
-
       metadata: {
-
         description: 'Current system interaction patterns and execution flows',
-
         applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
+          plan: 'required',
+          task: 'omitted',
+          project: 'required',
+          module: 'required',
+          feature: 'required',
         },
-
       },
-
     },
     businessProcesses: {
-
       name: 'businessProcesses',
-
       label: 'Business Processes',
-
       graphql: {
-
         type: GRAPHQL_TYPES.STRING,
-
         required: true,
-
       },
-
       zod: z.string().min(1),
-
       metadata: {
-
         description: 'Current business process execution flows and patterns',
-
         applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
+          plan: 'required',
+          task: 'omitted',
+          project: 'required',
+          module: 'required',
+          feature: 'required',
         },
-
       },
-
     },
-    family: {
-
-      name: 'family',
-
-      label: 'Family',
-
-      graphql: {
-
-        type: '_Family_4_CurrentArchitecture_',
-
-        required: true,
-
-      },
-
-      zod: z.object({}).passthrough(),
-
-      metadata: {
-
-        description: 'Reference to the parent current architecture family',
-
-        applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
-        },
-
-      },
-
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_4_CURRENT_ARCHITECTURE, SECTION_NAME),
   },
 } as const;

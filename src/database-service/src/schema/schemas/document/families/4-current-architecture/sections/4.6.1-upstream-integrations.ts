@@ -1,8 +1,16 @@
 import { z } from 'zod';
 import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 4.6.1: Upstream Integrations
 export const SECTION_4_6_1_UPSTREAM_INTEGRATIONS = '4.6.1' as const;
+export const SECTION_NAME = 'upstream integrations' as const;
 
 export const section_4_6_1_upstream_integrations = {
   id: SECTION_4_6_1_UPSTREAM_INTEGRATIONS,
@@ -71,269 +79,93 @@ export const section_4_6_1_upstream_integrations = {
     'Provide context for why current upstream integration decisions were made',
   ],
   fields: {
-    id: {
-
-      name: 'id',
-
-      label: 'Id',
-
-      graphql: {
-
-        type: GRAPHQL_TYPES.STRING,
-
-        required: true,
-
-      },
-
-      zod: z.string().min(1),
-
-      metadata: {
-
-        description: 'Unique identifier for the upstream integrations section',
-
-        applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
-        },
-
-      },
-
-    },
-    sectionCreatedOn: {
-
-      name: 'sectionCreatedOn',
-
-      label: 'Section Created On',
-
-      graphql: {
-
-        type: GRAPHQL_TYPES.STRING,
-
-        required: true,
-
-      },
-
-      zod: z.string().datetime(),
-
-      metadata: {
-
-        description: 'Timestamp when the upstream integrations section was created',
-
-        applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
-        },
-
-      },
-
-    },
-    sectionLastUpdatedOn: {
-
-      name: 'sectionLastUpdatedOn',
-
-      label: 'Section Last Updated On',
-
-      graphql: {
-
-        type: GRAPHQL_TYPES.STRING,
-
-        required: true,
-
-      },
-
-      zod: z.string().datetime(),
-
-      metadata: {
-
-        description: 'Timestamp when the upstream integrations section was last updated',
-
-        applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
-        },
-
-      },
-
-    },
+    id: createIdField(SECTION_NAME),
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     upstreamSystems: {
-
       name: 'upstreamSystems',
-
       label: 'Upstream Systems',
-
       graphql: {
-
         type: GRAPHQL_TYPES.STRING,
 
         required: true,
-
       },
-
       zod: z.string().min(1),
-
       metadata: {
-
         description: 'Current upstream systems that this scope consumes from',
 
         applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
+          plan: 'required',
+          task: 'omitted',
+          project: 'required',
+          module: 'required',
+          feature: 'required',
         },
-
       },
-
     },
     dataSources: {
-
       name: 'dataSources',
-
       label: 'Data Sources',
-
       graphql: {
-
         type: GRAPHQL_TYPES.STRING,
 
         required: true,
-
       },
-
       zod: z.string().min(1),
-
       metadata: {
-
         description: 'Current upstream data sources and their types',
 
         applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
+          plan: 'required',
+          task: 'omitted',
+          project: 'required',
+          module: 'required',
+          feature: 'required',
         },
-
       },
-
     },
     integrationPatterns: {
-
       name: 'integrationPatterns',
-
       label: 'Integration Patterns',
-
       graphql: {
-
         type: GRAPHQL_TYPES.STRING,
 
         required: true,
-
       },
-
       zod: z.string().min(1),
-
       metadata: {
-
         description: 'Current upstream integration patterns and protocols',
 
         applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
+          plan: 'required',
+          task: 'omitted',
+          project: 'required',
+          module: 'required',
+          feature: 'required',
         },
-
       },
-
     },
     consumptionMethods: {
-
       name: 'consumptionMethods',
-
       label: 'Consumption Methods',
-
       graphql: {
-
         type: GRAPHQL_TYPES.STRING,
 
         required: true,
-
       },
-
       zod: z.string().min(1),
-
       metadata: {
-
         description: 'Current methods used to consume data from upstream systems',
 
         applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
+          plan: 'required',
+          task: 'omitted',
+          project: 'required',
+          module: 'required',
+          feature: 'required',
         },
-
       },
-
     },
-    family: {
-
-      name: 'family',
-
-      label: 'Family',
-
-      graphql: {
-
-        type: '_Family_4_CurrentArchitecture_',
-
-        required: true,
-
-      },
-
-      zod: z.object({}).passthrough(),
-
-      metadata: {
-
-        description: 'Reference to the parent current architecture family',
-
-        applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
-        },
-
-      },
-
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_4_CURRENT_ARCHITECTURE, SECTION_NAME),
   },
 } as const;

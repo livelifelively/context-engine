@@ -1,8 +1,16 @@
 import { z } from 'zod';
 import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 9.1: Configuration
 export const SECTION_9_1_CONFIGURATION = '9.1' as const;
+export const SECTION_NAME = 'configuration' as const;
 
 export const section_9_1_configuration = {
   id: SECTION_9_1_CONFIGURATION,
@@ -61,54 +69,11 @@ export const section_9_1_configuration = {
     'Cover both application and infrastructure configuration',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the configuration section',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the configuration section was created',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the configuration section was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     configurationStrategy: {
       name: 'configurationStrategy',
       label: 'Configuration Strategy',
@@ -173,21 +138,6 @@ export const section_9_1_configuration = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_9_QualityStandardsOperations_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent quality standards & operations family',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_9_QUALITY_STANDARDS_OPERATIONS, SECTION_NAME),
   },
 } as const;

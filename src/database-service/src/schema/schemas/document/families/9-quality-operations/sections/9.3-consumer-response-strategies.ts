@@ -1,8 +1,16 @@
 import { z } from 'zod';
 import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 9.3: Consumer Response Strategies
 export const SECTION_9_3_CONSUMER_RESPONSE_STRATEGIES = '9.3' as const;
+export const SECTION_NAME = 'consumer response strategies' as const;
 
 export const section_9_3_consumer_response_strategies = {
   id: SECTION_9_3_CONSUMER_RESPONSE_STRATEGIES,
@@ -61,54 +69,11 @@ export const section_9_3_consumer_response_strategies = {
     'Cover both individual consumer responses and system-wide coordination',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the consumer response strategies section',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the consumer response strategies section was created',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the consumer response strategies section was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     consumerStrategies: {
       name: 'consumerStrategies',
       label: 'Consumer Strategies',
@@ -173,21 +138,6 @@ export const section_9_3_consumer_response_strategies = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_9_QualityStandardsOperations_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent quality standards & operations family',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_9_QUALITY_STANDARDS_OPERATIONS, SECTION_NAME),
   },
 } as const;

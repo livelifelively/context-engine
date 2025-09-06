@@ -1,8 +1,16 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import { GRAPHQL_TYPES } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 4.6: Integration Points
 export const SECTION_4_6_INTEGRATION_POINTS = '4.6' as const;
+export const SECTION_NAME = 'integration points' as const;
 
 export const section_4_6_integration_points = {
   id: SECTION_4_6_INTEGRATION_POINTS,
@@ -71,269 +79,85 @@ export const section_4_6_integration_points = {
     'Provide context for why current integration decisions were made',
   ],
   fields: {
-    id: {
-
-      name: 'id',
-
-      label: 'Id',
-
-      graphql: {
-
-        type: GRAPHQL_TYPES.STRING,
-
-        required: true,
-
-      },
-
-      zod: z.string().min(1),
-
-      metadata: {
-
-        description: 'Unique identifier for the integration points section',
-
-        applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
-        },
-
-      },
-
-    },
-    sectionCreatedOn: {
-
-      name: 'sectionCreatedOn',
-
-      label: 'Section Created On',
-
-      graphql: {
-
-        type: GRAPHQL_TYPES.STRING,
-
-        required: true,
-
-      },
-
-      zod: z.string().datetime(),
-
-      metadata: {
-
-        description: 'Timestamp when the integration points section was created',
-
-        applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
-        },
-
-      },
-
-    },
-    sectionLastUpdatedOn: {
-
-      name: 'sectionLastUpdatedOn',
-
-      label: 'Section Last Updated On',
-
-      graphql: {
-
-        type: GRAPHQL_TYPES.STRING,
-
-        required: true,
-
-      },
-
-      zod: z.string().datetime(),
-
-      metadata: {
-
-        description: 'Timestamp when the integration points section was last updated',
-
-        applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
-        },
-
-      },
-
-    },
+    id: createIdField(SECTION_NAME),
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     integrationPoints: {
-
       name: 'integrationPoints',
-
       label: 'Integration Points',
-
       graphql: {
-
         type: GRAPHQL_TYPES.STRING,
-
         required: true,
-
       },
-
       zod: z.string().min(1),
-
       metadata: {
-
         description: 'Description of current integration points and external system connections',
-
         applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
+          plan: 'required',
+          task: 'omitted',
+          project: 'required',
+          module: 'required',
+          feature: 'required',
         },
-
       },
-
     },
     externalSystems: {
-
       name: 'externalSystems',
-
       label: 'External Systems',
-
       graphql: {
-
         type: GRAPHQL_TYPES.STRING,
-
         required: true,
-
       },
-
       zod: z.string().min(1),
-
       metadata: {
-
         description: 'Current external systems and their connection points',
-
         applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
+          plan: 'required',
+          task: 'omitted',
+          project: 'required',
+          module: 'required',
+          feature: 'required',
         },
-
       },
-
     },
     integrationPatterns: {
-
       name: 'integrationPatterns',
-
       label: 'Integration Patterns',
-
       graphql: {
-
         type: GRAPHQL_TYPES.STRING,
-
         required: true,
-
       },
-
       zod: z.string().min(1),
-
       metadata: {
-
         description: 'Current integration patterns and protocols used',
-
         applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
+          plan: 'required',
+          task: 'omitted',
+          project: 'required',
+          module: 'required',
+          feature: 'required',
         },
-
       },
-
     },
     systemBoundaries: {
-
       name: 'systemBoundaries',
-
       label: 'System Boundaries',
-
       graphql: {
-
         type: GRAPHQL_TYPES.STRING,
-
         required: true,
-
       },
-
       zod: z.string().min(1),
-
       metadata: {
-
         description: 'Current system boundaries and integration constraints',
-
         applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
+          plan: 'required',
+          task: 'omitted',
+          project: 'required',
+          module: 'required',
+          feature: 'required',
         },
-
       },
-
     },
-    family: {
-
-      name: 'family',
-
-      label: 'Family',
-
-      graphql: {
-
-        type: '_Family_4_CurrentArchitecture_',
-
-        required: true,
-
-      },
-
-      zod: z.object({}).passthrough(),
-
-      metadata: {
-
-        description: 'Reference to the parent current architecture family',
-
-        applicability: {
-        plan: 'required',
-        task: 'omitted',
-        project: 'required',
-        module: 'required',
-        feature: 'required',
-      
-
-        },
-
-      },
-
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_4_CURRENT_ARCHITECTURE, SECTION_NAME),
   },
 } as const;

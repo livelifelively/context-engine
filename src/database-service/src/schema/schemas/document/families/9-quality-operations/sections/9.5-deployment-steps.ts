@@ -1,8 +1,16 @@
 import { z } from 'zod';
 import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 9.5: Deployment Steps
 export const SECTION_9_5_DEPLOYMENT_STEPS = '9.5' as const;
+export const SECTION_NAME = 'deployment steps' as const;
 
 export const section_9_5_deployment_steps = {
   id: SECTION_9_5_DEPLOYMENT_STEPS,
@@ -60,54 +68,11 @@ export const section_9_5_deployment_steps = {
     'Cover both application and infrastructure deployment procedures',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the deployment steps section',
-        applicability: {
-          plan: 'required',
-          task: 'omitted',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the deployment steps section was created',
-        applicability: {
-          plan: 'required',
-          task: 'omitted',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the deployment steps section was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'omitted',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     deploymentSteps: {
       name: 'deploymentSteps',
       label: 'Deployment Steps',
@@ -172,21 +137,6 @@ export const section_9_5_deployment_steps = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_9_QualityStandardsOperations_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent quality standards & operations family',
-        applicability: {
-          plan: 'required',
-          task: 'omitted',
-        },
-      },
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_9_QUALITY_STANDARDS_OPERATIONS, SECTION_NAME),
   },
 } as const;

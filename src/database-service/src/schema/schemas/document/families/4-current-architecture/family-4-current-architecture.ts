@@ -1,8 +1,13 @@
-import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../constants.js';
+import {
+  createFamilyIdField,
+  createFamilyCreatedOnField,
+  createFamilyLastUpdatedOnField,
+  createDocumentReferenceField,
+} from '../../field-factories.js';
 
 // Family 4: Current Architecture
 export const FAMILY_4_CURRENT_ARCHITECTURE = '4-current-architecture' as const;
+export const FAMILY_NAME = 'current architecture' as const;
 
 export const family_4_current_architecture = {
   id: FAMILY_4_CURRENT_ARCHITECTURE,
@@ -75,81 +80,12 @@ export const family_4_current_architecture = {
     'Provide context for why current architecture decisions were made',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the current architecture family',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    familyCreatedOn: {
-      name: 'familyCreatedOn',
-      label: 'Family Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the current architecture family was created',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    familyLastUpdatedOn: {
-      name: 'familyLastUpdatedOn',
-      label: 'Family Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the current architecture family was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    document: {
-      name: 'document',
-      label: 'Document',
-      graphql: {
-        type: '_Document_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent document containing this current architecture family',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    id: createFamilyIdField(FAMILY_NAME),
+
+    familyCreatedOn: createFamilyCreatedOnField(FAMILY_NAME),
+
+    familyLastUpdatedOn: createFamilyLastUpdatedOnField(FAMILY_NAME),
+
+    document: createDocumentReferenceField(FAMILY_NAME),
   },
 } as const;
