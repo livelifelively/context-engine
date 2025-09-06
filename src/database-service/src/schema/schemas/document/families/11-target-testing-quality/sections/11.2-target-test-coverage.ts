@@ -1,13 +1,22 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import { GRAPHQL_TYPES } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 11.2: Target Test Coverage
 export const SECTION_11_2_TARGETTESTCOVERAGE = '11.2' as const;
+export const SECTION_NAME = 'target test coverage' as const;
 
 export const section_11_2_target_test_coverage = {
   id: SECTION_11_2_TARGETTESTCOVERAGE,
   name: 'Target Test Coverage',
-  description: 'Defines the target test coverage requirements and standards. Specifies desired test coverage metrics and requirements.',
+  description:
+    'Defines the target test coverage requirements and standards. Specifies desired test coverage metrics and requirements.',
   interfaceName: '_Section_11_2_TargetTestCoverage_',
   businessPurpose: 'Define the target target test coverage to guide testing implementation and quality improvements.',
   questionsItAnswers: [
@@ -38,7 +47,7 @@ export const section_11_2_target_test_coverage = {
         targetCoverage: 'Target test coverage requirements and percentages',
         coverageRequirements: 'Target coverage requirements by component and test type',
         coverageStandards: 'Target coverage standards and quality gates',
-        coverageGoals: 'Target coverage goals and milestones'
+        coverageGoals: 'Target coverage goals and milestones',
       },
     },
   ],
@@ -50,54 +59,11 @@ export const section_11_2_target_test_coverage = {
     'Include rationale for target standards and requirements',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the target test coverage section',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the target test coverage section was created',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the target test coverage section was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     targetCoverage: {
       name: 'targetCoverage',
       label: 'Target Coverage',
@@ -162,21 +128,6 @@ export const section_11_2_target_test_coverage = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_11_TargetTestingQuality_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent target testing & quality family',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
+    family: createFamilyReferenceField(SECTION_NAME, FAMILY_INTERFACES.FAMILY_11_TARGET_TESTING_QUALITY),
   },
 } as const;

@@ -1,5 +1,11 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 import {
   GlossaryItemSchema,
   AppendixItemSchema,
@@ -9,6 +15,7 @@ import {
 
 // Section 12.1: Appendices/Glossary
 export const SECTION_12_1_APPENDICES_GLOSSARY = '12.1' as const;
+export const SECTION_NAME = 'appendices/glossary' as const;
 
 export const section_12_1_appendices_glossary = {
   id: SECTION_12_1_APPENDICES_GLOSSARY,
@@ -80,54 +87,11 @@ export const section_12_1_appendices_glossary = {
     'Provide clear definitions and explanations for complex terms',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the appendices/glossary section',
-        applicability: {
-          plan: 'optional',
-          task: 'optional',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the appendices/glossary section was created',
-        applicability: {
-          plan: 'optional',
-          task: 'optional',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the appendices/glossary section was last updated',
-        applicability: {
-          plan: 'optional',
-          task: 'optional',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     glossary: {
       name: 'glossary',
       label: 'Glossary',
@@ -160,21 +124,6 @@ export const section_12_1_appendices_glossary = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_12_Reference_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent reference family',
-        applicability: {
-          plan: 'optional',
-          task: 'optional',
-        },
-      },
-    },
+    family: createFamilyReferenceField(SECTION_NAME, FAMILY_INTERFACES.FAMILY_12_REFERENCE),
   },
 } as const;

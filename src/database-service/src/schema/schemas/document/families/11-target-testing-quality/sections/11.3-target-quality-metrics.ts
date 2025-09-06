@@ -1,8 +1,16 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import { GRAPHQL_TYPES } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 11.3: Target Quality Metrics
 export const SECTION_11_3_TARGETQUALITYMETRICS = '11.3' as const;
+export const SECTION_NAME = 'target quality metrics' as const;
 
 export const section_11_3_target_quality_metrics = {
   id: SECTION_11_3_TARGETQUALITYMETRICS,
@@ -38,7 +46,7 @@ export const section_11_3_target_quality_metrics = {
         qualityStandards: 'Target quality standards and requirements',
         performanceTargets: 'Target performance metrics and benchmarks',
         defectTargets: 'Target defect rates and quality requirements',
-        qualityGoals: 'Target quality goals and success criteria'
+        qualityGoals: 'Target quality goals and success criteria',
       },
     },
   ],
@@ -50,54 +58,11 @@ export const section_11_3_target_quality_metrics = {
     'Include rationale for target standards and requirements',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the target quality metrics section',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the target quality metrics section was created',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the target quality metrics section was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     qualityStandards: {
       name: 'qualityStandards',
       label: 'Quality Standards',
@@ -162,21 +127,6 @@ export const section_11_3_target_quality_metrics = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_11_TargetTestingQuality_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent target testing & quality family',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
+    family: createFamilyReferenceField(SECTION_NAME, FAMILY_INTERFACES.FAMILY_11_TARGET_TESTING_QUALITY),
   },
 } as const;

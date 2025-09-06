@@ -1,8 +1,13 @@
-import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../constants.js';
+import {
+  createFamilyIdField,
+  createFamilyCreatedOnField,
+  createFamilyLastUpdatedOnField,
+  createDocumentReferenceField,
+} from '../../field-factories.js';
 
 // Family 11: Target Testing & Quality
 export const FAMILY_11_TARGET_TESTING_QUALITY = '11-target-testing-quality' as const;
+export const FAMILY_NAME = 'target testing & quality' as const;
 
 export const family_11_target_testing_quality = {
   id: FAMILY_11_TARGET_TESTING_QUALITY,
@@ -70,69 +75,12 @@ export const family_11_target_testing_quality = {
     'Include rationale for target standards and quality requirements',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the target testing & quality family',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
-    familyCreatedOn: {
-      name: 'familyCreatedOn',
-      label: 'Family Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the target testing & quality family was created',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
-    familyLastUpdatedOn: {
-      name: 'familyLastUpdatedOn',
-      label: 'Family Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the target testing & quality family was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
-    document: {
-      name: 'document',
-      label: 'Document',
-      graphql: {
-        type: '_Document_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent document containing this target testing & quality family',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
+    id: createFamilyIdField(FAMILY_NAME),
+
+    familyCreatedOn: createFamilyCreatedOnField(FAMILY_NAME),
+
+    familyLastUpdatedOn: createFamilyLastUpdatedOnField(FAMILY_NAME),
+
+    document: createDocumentReferenceField(FAMILY_NAME),
   },
 } as const;

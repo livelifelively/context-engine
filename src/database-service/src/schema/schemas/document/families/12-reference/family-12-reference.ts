@@ -1,8 +1,13 @@
-import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../constants.js';
+import {
+  createFamilyIdField,
+  createFamilyCreatedOnField,
+  createFamilyLastUpdatedOnField,
+  createDocumentReferenceField,
+} from '../../field-factories.js';
 
 // Family 12: Reference
 export const FAMILY_12_REFERENCE = '12-reference' as const;
+export const FAMILY_NAME = 'reference' as const;
 
 export const family_12_reference = {
   id: FAMILY_12_REFERENCE,
@@ -79,69 +84,12 @@ export const family_12_reference = {
     'Provide clear definitions and explanations for complex terms',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the reference family',
-        applicability: {
-          plan: 'optional',
-          task: 'optional',
-        },
-      },
-    },
-    familyCreatedOn: {
-      name: 'familyCreatedOn',
-      label: 'Family Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the reference family was created',
-        applicability: {
-          plan: 'optional',
-          task: 'optional',
-        },
-      },
-    },
-    familyLastUpdatedOn: {
-      name: 'familyLastUpdatedOn',
-      label: 'Family Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the reference family was last updated',
-        applicability: {
-          plan: 'optional',
-          task: 'optional',
-        },
-      },
-    },
-    document: {
-      name: 'document',
-      label: 'Document',
-      graphql: {
-        type: '_Document_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent document containing this reference family',
-        applicability: {
-          plan: 'optional',
-          task: 'optional',
-        },
-      },
-    },
+    id: createFamilyIdField(FAMILY_NAME),
+
+    familyCreatedOn: createFamilyCreatedOnField(FAMILY_NAME),
+
+    familyLastUpdatedOn: createFamilyLastUpdatedOnField(FAMILY_NAME),
+
+    document: createDocumentReferenceField(FAMILY_NAME),
   },
 } as const;

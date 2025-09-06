@@ -1,15 +1,25 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import { GRAPHQL_TYPES } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 11.1: Target Testing Strategy
 export const SECTION_11_1_TARGETTESTINGSTRATEGY = '11.1' as const;
+export const SECTION_NAME = 'target testing strategy' as const;
 
 export const section_11_1_target_testing_strategy = {
   id: SECTION_11_1_TARGETTESTINGSTRATEGY,
   name: 'Target Testing Strategy',
-  description: 'Defines the target testing strategy and approach that should be implemented. Specifies desired testing methodologies and practices.',
+  description:
+    'Defines the target testing strategy and approach that should be implemented. Specifies desired testing methodologies and practices.',
   interfaceName: '_Section_11_1_TargetTestingStrategy_',
-  businessPurpose: 'Define the target target testing strategy to guide testing implementation and quality improvements.',
+  businessPurpose:
+    'Define the target target testing strategy to guide testing implementation and quality improvements.',
   questionsItAnswers: [
     'What target testing strategy should be implemented?',
     'What are the target target testing strategy requirements?',
@@ -38,7 +48,7 @@ export const section_11_1_target_testing_strategy = {
         targetStrategy: 'Target testing strategy and approach',
         methodologies: 'Target testing methodologies and practices',
         practices: 'Target testing practices and procedures',
-        requirements: 'Target testing requirements and standards'
+        requirements: 'Target testing requirements and standards',
       },
     },
   ],
@@ -50,54 +60,11 @@ export const section_11_1_target_testing_strategy = {
     'Include rationale for target standards and requirements',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the target testing strategy section',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the target testing strategy section was created',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the target testing strategy section was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     targetStrategy: {
       name: 'targetStrategy',
       label: 'Target Strategy',
@@ -162,21 +129,6 @@ export const section_11_1_target_testing_strategy = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_11_TargetTestingQuality_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent target testing & quality family',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-        },
-      },
-    },
+    family: createFamilyReferenceField(SECTION_NAME, FAMILY_INTERFACES.FAMILY_11_TARGET_TESTING_QUALITY),
   },
 } as const;
