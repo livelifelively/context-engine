@@ -11,14 +11,20 @@
  * for all document types across the system.
  */
 
-import { z } from 'zod';
-import { GRAPHQL_TYPES, DOCUMENT_TYPES } from '../../constants.js';
+import { DOCUMENT_TYPES } from '../../constants.js';
+import {
+  createFamilyIdField,
+  createFamilyCreatedOnField,
+  createFamilyLastUpdatedOnField,
+  createDocumentReferenceField,
+} from '../../field-factories.js';
 
 // =============================================================================
 // FAMILY IDENTIFIER
 // =============================================================================
 
 export const FAMILY_2_BUSINESS_SCOPE = '2-business-scope';
+export const FAMILY_NAME = 'business & scope' as const;
 
 export const family_2_business_scope = {
   // =============================================================================
@@ -118,71 +124,13 @@ export const family_2_business_scope = {
   // =============================================================================
 
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.ID,
-        required: true,
-      },
-      zod: z.string(),
-      metadata: {
-        description: 'Unique identifier for the family',
-        businessPurpose: 'Enables unique identification and referencing',
-        questionItAnswers: ["What is the ID of the 'business & scope' family in the database?"],
-        validationRules: ['Must be a valid string'],
-      },
-    },
+    id: createFamilyIdField(FAMILY_NAME),
 
-    familyCreatedOn: {
-      name: 'familyCreatedOn',
-      label: 'Family Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.DATETIME_OPTIONAL,
-        required: false,
-      },
-      zod: z.date().optional(),
-      metadata: {
-        description: 'Timestamp when the family was created',
-        businessPurpose: 'Provides audit trail and creation tracking',
-        questionItAnswers: ["What is the created on date of the 'business & scope' family?"],
-        validationRules: ['Must be a valid date'],
-        examples: ['2024-01-01T00:00:00Z'],
-      },
-    },
+    familyCreatedOn: createFamilyCreatedOnField(FAMILY_NAME),
 
-    familyLastUpdatedOn: {
-      name: 'familyLastUpdatedOn',
-      label: 'Family Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.DATETIME_OPTIONAL,
-        required: false,
-      },
-      zod: z.date().optional(),
-      metadata: {
-        description: 'Timestamp when the family was last updated',
-        businessPurpose: 'Enables change tracking and freshness monitoring',
-        questionItAnswers: ["What is the last updated on date of the 'business & scope' family?"],
-        validationRules: ['Must be a valid date'],
-        examples: ['2024-01-15T14:30:00Z'],
-      },
-    },
+    familyLastUpdatedOn: createFamilyLastUpdatedOnField(FAMILY_NAME),
 
-    document: {
-      name: 'document',
-      label: 'Document',
-      graphql: {
-        type: '_Document_',
-        required: true,
-      },
-      zod: z.string(),
-      metadata: {
-        description: 'Reference ID to the parent document in the database',
-        businessPurpose: 'Establishes the relationship between family and document',
-        questionItAnswers: ["Which document is the 'business & scope' family related to?"],
-        validationRules: ['Must be a valid document reference'],
-      },
-    },
+    document: createDocumentReferenceField(FAMILY_NAME),
   },
 } as const;
 

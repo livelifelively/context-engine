@@ -13,12 +13,20 @@
 import { z } from 'zod';
 import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
 import { BusinessRuleSchema, type BusinessRule } from '../shared-data-types.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // =============================================================================
 // SECTION IDENTIFIER
 // =============================================================================
 
 export const SECTION_2_2_2_BUSINESS_RULES = '2.2.2' as const;
+export const SECTION_NAME = 'business rules' as const;
 
 export const section_2_2_2_business_rules = {
   // =============================================================================
@@ -112,55 +120,11 @@ export const section_2_2_2_business_rules = {
   // =============================================================================
 
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.ID,
-        required: true,
-      },
-      zod: z.string().optional(),
-      metadata: {
-        description: 'Unique identifier for the business rules section',
-        businessPurpose: 'Enables unique identification and referencing',
-        questionsItAnswers: ['What is the id of the business rules section in the database?'],
-        validationRules: ['Must be a valid string'],
-      },
-    },
+    id: createIdField(SECTION_NAME),
 
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.DATETIME_OPTIONAL,
-        required: false,
-      },
-      zod: z.date().optional(),
-      metadata: {
-        description: 'Timestamp when the business rules section was created',
-        businessPurpose: 'Provides audit trail and creation tracking',
-        questionsItAnswers: ['What is the created on date of the business rules section?'],
-        validationRules: ['Must be a valid date'],
-        examples: ['2024-01-15T09:00:00Z'],
-      },
-    },
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
 
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.DATETIME_OPTIONAL,
-        required: false,
-      },
-      zod: z.date().optional(),
-      metadata: {
-        description: 'Timestamp when the business rules section was last updated',
-        businessPurpose: 'Enables change tracking and freshness monitoring',
-        questionsItAnswers: ['What is the last updated on date of the business rules section?'],
-        validationRules: ['Must be a valid date'],
-        examples: ['2024-01-15T14:30:00Z'],
-      },
-    },
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
 
     coreBusinessRules: {
       name: 'coreBusinessRules',
@@ -198,21 +162,7 @@ export const section_2_2_2_business_rules = {
       },
     },
 
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_2_BusinessScope_',
-        required: true,
-      },
-      zod: z.string(),
-      metadata: {
-        description: 'Reference to the parent family',
-        businessPurpose: 'Establishes the relationship between section and family',
-        questionsItAnswers: ['What is the family of the business rules section?'],
-        validationRules: ['Must be a valid family reference'],
-      },
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_2_BUSINESS_SCOPE, SECTION_NAME),
   },
 } as const;
 

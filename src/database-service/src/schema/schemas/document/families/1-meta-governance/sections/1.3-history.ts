@@ -12,13 +12,21 @@
  */
 
 import { z } from 'zod';
-import { GRAPHQL_TYPES } from '../../../constants.js';
+
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // =============================================================================
 // SECTION IDENTIFIER
 // =============================================================================
 
 export const SECTION_1_3_HISTORY = '1.3' as const;
+export const SECTION_NAME = 'history' as const;
 
 export const section_1_3_history = {
   // =============================================================================
@@ -83,55 +91,11 @@ export const section_1_3_history = {
   // =============================================================================
 
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.ID,
-        required: true,
-      },
-      zod: z.string(),
-      metadata: {
-        description: 'Unique identifier for the history section',
-        businessPurpose: 'Enables unique identification and referencing',
-        questionItAnswers: ["What is the id of the 'history' section in the database?"],
-        validationRules: ['Must be a valid string'],
-      },
-    },
+    id: createIdField(SECTION_NAME),
 
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.DATETIME_OPTIONAL,
-        required: false,
-      },
-      zod: z.date().optional(),
-      metadata: {
-        description: 'Timestamp when the history section was created',
-        businessPurpose: 'Provides audit trail and creation tracking',
-        questionItAnswers: ["What is the created on date of the 'history' section?"],
-        validationRules: ['Must be a valid date'],
-        examples: ['2024-01-01T00:00:00Z'],
-      },
-    },
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
 
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.DATETIME_OPTIONAL,
-        required: false,
-      },
-      zod: z.date().optional(),
-      metadata: {
-        description: 'Timestamp when the history section was last updated',
-        businessPurpose: 'Enables change tracking and freshness monitoring',
-        questionItAnswers: ["What is the last updated on date of the 'history' section?"],
-        validationRules: ['Must be a valid date'],
-        examples: ['2024-01-15T14:30:00Z'],
-      },
-    },
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
 
     taskDocuments: {
       name: 'taskDocuments',
@@ -156,21 +120,7 @@ export const section_1_3_history = {
       },
     },
 
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_1_MetaGovernance_',
-        required: true,
-      },
-      zod: z.string(),
-      metadata: {
-        description: 'Reference to the parent family',
-        businessPurpose: 'Establishes the relationship between section and family',
-        questionItAnswers: ["What is the family of the 'history' section?"],
-        validationRules: ['Must be a valid family reference'],
-      },
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_1_META_GOVERNANCE, SECTION_NAME),
   },
 } as const;
 

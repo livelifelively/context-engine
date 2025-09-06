@@ -1,291 +1,239 @@
 /**
  * Section 1.1: Status
- * 
+ *
  * This file contains the complete data object for the Status section,
  * serving as the single source of truth for generating:
  * - GraphQL schemas (interfaces and types)
  * - Zod validation schemas
  * - Rich metadata and documentation
- * 
+ *
  * This section provides real-time execution visibility and status tracking
  * for tasks across all document types in the Meta & Governance family.
  */
 
 import { z } from 'zod';
-import { 
-  GRAPHQL_TYPES, 
-  GRAPHQL_ENUMS
-} from '../../../constants.js';
+import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // =============================================================================
 // SECTION IDENTIFIER
 // =============================================================================
 
-export const SECTION_1_1_STATUS = "1.1" as const;
+export const SECTION_1_1_STATUS = '1.1' as const;
+export const SECTION_NAME = 'status' as const;
 
 export const section_1_1_status = {
   // =============================================================================
   // BASIC METADATA
   // =============================================================================
-  
+
   id: SECTION_1_1_STATUS,
-  name: "Status",
-  description: "Real-time execution visibility and status tracking for tasks",
-  
+  name: 'Status',
+  description: 'Real-time execution visibility and status tracking for tasks',
+
   // =============================================================================
   // SECTION DEFINITION
   // =============================================================================
-  
+
   // GraphQL interface name
-  interfaceName: "_Section_1_1_Status_",
-  
+  interfaceName: '_Section_1_1_Status_',
+
   // Section-level metadata
-  businessPurpose: "Enables humans and AI systems to know the current status of task, identify blockers and track development velocity",
+  businessPurpose:
+    'Enables humans and AI systems to know the current status of task, identify blockers and track development velocity',
 
   questionsItAnswers: [
-    "What is the current status of the task?",
-    "What is the priority of the task?",
-    "What is the current progress of the task?",
-    "What is the planning estimate of the task?",
-    "How many story points is the task?",
-    "What is the implementation started on of the task?",
-    "When was the task completed?",
+    'What is the current status of the task?',
+    'What is the priority of the task?',
+    'What is the current progress of the task?',
+    'What is the planning estimate of the task?',
+    'How many story points is the task?',
+    'What is the implementation started on of the task?',
+    'When was the task completed?',
   ],
-  
+
   validationRules: [
-    "Must follow markdown format",
-    "Must include required timestamp fields",
-    "Progress must be between 0 and 100",
-    "Planning estimate must be positive integer"
+    'Must follow markdown format',
+    'Must include required timestamp fields',
+    'Progress must be between 0 and 100',
+    'Planning estimate must be positive integer',
   ],
-  
+
   usageGuidelines: [
-    "Should be updated in real-time as work progresses",
-    "Must reflect current execution state accurately",
-    "Progress updates should be granular and meaningful",
-    "Timestamps should be automatically managed by the system"
+    'Should be updated in real-time as work progresses',
+    'Must reflect current execution state accurately',
+    'Progress updates should be granular and meaningful',
+    'Timestamps should be automatically managed by the system',
   ],
-  
+
   examples: [
     {
-      context: "Task in progress",
+      context: 'Task in progress',
       data: {
-        currentState: "IN_PROGRESS",
-        priority: "HIGH",
+        currentState: 'IN_PROGRESS',
+        priority: 'HIGH',
         progress: 75,
         planningEstimate: 8,
-        implementationStartedOn: "2024-01-15T09:00:00Z"
-      }
+        implementationStartedOn: '2024-01-15T09:00:00Z',
+      },
     },
     {
-      context: "Blocked task",
+      context: 'Blocked task',
       data: {
-        currentState: "BLOCKED",
-        priority: "MEDIUM",
+        currentState: 'BLOCKED',
+        priority: 'MEDIUM',
         progress: 30,
         planningEstimate: 5,
-        implementationStartedOn: "2024-01-10T14:30:00Z"
-      }
+        implementationStartedOn: '2024-01-10T14:30:00Z',
+      },
     },
     {
-      context: "Completed task",
+      context: 'Completed task',
       data: {
-        currentState: "COMPLETED",
-        priority: "HIGH",
+        currentState: 'COMPLETED',
+        priority: 'HIGH',
         progress: 100,
         planningEstimate: 3,
-        implementationStartedOn: "2024-01-12T10:00:00Z",
-        completedOn: "2024-01-15T16:45:00Z"
-      }
-    }
+        implementationStartedOn: '2024-01-12T10:00:00Z',
+        completedOn: '2024-01-15T16:45:00Z',
+      },
+    },
   ],
-  
+
   aiInstructions: [
-    "Monitor status changes and update progress automatically when possible",
-    "Identify patterns in status changes to predict completion times",
-    "Alert on blocked tasks that have been stuck for extended periods",
-    "Suggest priority adjustments based on business context and deadlines"
+    'Monitor status changes and update progress automatically when possible',
+    'Identify patterns in status changes to predict completion times',
+    'Alert on blocked tasks that have been stuck for extended periods',
+    'Suggest priority adjustments based on business context and deadlines',
   ],
-  
+
   // =============================================================================
   // FIELD DEFINITIONS
   // =============================================================================
-  
+
   fields: {
-    id: {
-      name: "id",
-      label: "ID",
-      graphql: {
-        type: GRAPHQL_TYPES.ID,
-        required: true
-      },
-      zod: z.string().optional(),
-      metadata: {
-        description: "Unique identifier for the status section",
-        businessPurpose: "Enables unique identification and referencing",
-        questionsItAnswers: ["What is the id of the status section in the database?"],
-        validationRules: ["Must be a valid string"]
-      }
-    },
-    
-    sectionCreatedOn: {
-      name: "sectionCreatedOn",
-      label: "Section Created On",
-      graphql: {
-        type: GRAPHQL_TYPES.DATETIME_OPTIONAL,
-        required: false
-      },
-      zod: z.date().optional(),
-      metadata: {
-        description: "Timestamp when the status section was created",
-        businessPurpose: "Provides audit trail and creation tracking",
-        questionsItAnswers: ["What is the created on date of the status section?"],
-        validationRules: ["Must be a valid date"],
-        examples: ["2024-01-15T09:00:00Z"]
-      }
-    },
-    
-    sectionLastUpdatedOn: {
-      name: "sectionLastUpdatedOn",
-      label: "Section Last Updated On",
-      graphql: {
-        type: GRAPHQL_TYPES.DATETIME_OPTIONAL,
-        required: false
-      },
-      zod: z.date().optional(),
-      metadata: {
-        description: "Timestamp when the status section was last updated",
-        businessPurpose: "Enables change tracking and freshness monitoring",
-        questionsItAnswers: ["What is the last updated on date of the status section?"],
-        validationRules: ["Must be a valid date"],
-        examples: ["2024-01-15T14:30:00Z"]
-      }
-    },
-    
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
+
     currentState: {
-      name: "currentState",
-      label: "Current State",
+      name: 'currentState',
+      label: 'Current State',
       graphql: {
         type: GRAPHQL_ENUMS.STATUS_KEY,
-        required: true
+        required: true,
       },
-      zod: z.enum(["NOT_STARTED", "IN_PROGRESS", "BLOCKED", "COMPLETED"]),
+      zod: z.enum(['NOT_STARTED', 'IN_PROGRESS', 'BLOCKED', 'COMPLETED']),
       metadata: {
-        description: "Current execution state",
-        businessPurpose: "Provides immediate visibility into progress",
-        questionsItAnswers: ["What is the current state of the status section?"],
-        validationRules: ["Must be a valid StatusKey enum value"],
-        examples: ["NOT_STARTED", "IN_PROGRESS", "BLOCKED", "COMPLETED"]
-      }
+        description: 'Current execution state',
+        businessPurpose: 'Provides immediate visibility into progress',
+        questionsItAnswers: ['What is the current state of the status section?'],
+        validationRules: ['Must be a valid StatusKey enum value'],
+        examples: ['NOT_STARTED', 'IN_PROGRESS', 'BLOCKED', 'COMPLETED'],
+      },
     },
-    
+
     priority: {
-      name: "priority",
-      label: "Priority",
+      name: 'priority',
+      label: 'Priority',
       graphql: {
         type: GRAPHQL_ENUMS.PRIORITY_LEVEL,
-        required: true
+        required: true,
       },
-      zod: z.enum(["LOW", "MEDIUM", "HIGH", "CRITICAL"]),
+      zod: z.enum(['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']),
       metadata: {
-        description: "Priority level",
-        businessPurpose: "Helps with resource allocation and scheduling decisions",
-        questionsItAnswers: ["What is the priority of the status section?"],
-        validationRules: ["Must be a valid PriorityLevel enum value"],
-        examples: ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
-      }
+        description: 'Priority level',
+        businessPurpose: 'Helps with resource allocation and scheduling decisions',
+        questionsItAnswers: ['What is the priority of the status section?'],
+        validationRules: ['Must be a valid PriorityLevel enum value'],
+        examples: ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'],
+      },
     },
-    
+
     progress: {
-      name: "progress",
-      label: "Progress",
+      name: 'progress',
+      label: 'Progress',
       graphql: {
         type: GRAPHQL_TYPES.INT,
-        required: true
+        required: true,
       },
       zod: z.number().min(0).max(100),
       metadata: {
-        description: "Completion percentage (0-100)",
-        businessPurpose: "Provides quantitative progress tracking",
-        questionsItAnswers: ["What is the progress of the status section?"],
-        validationRules: ["Must be integer between 0 and 100"],
-        examples: [0, 25, 50, 75, 100]
-      }
+        description: 'Completion percentage (0-100)',
+        businessPurpose: 'Provides quantitative progress tracking',
+        questionsItAnswers: ['What is the progress of the status section?'],
+        validationRules: ['Must be integer between 0 and 100'],
+        examples: [0, 25, 50, 75, 100],
+      },
     },
-    
+
     planningEstimate: {
-      name: "planningEstimate",
-      label: "Planning Estimate",
+      name: 'planningEstimate',
+      label: 'Planning Estimate',
       graphql: {
         type: GRAPHQL_TYPES.INT,
-        required: true
+        required: true,
       },
       zod: z.number().min(1),
       metadata: {
-        description: "Estimated effort in story points or hours",
-        businessPurpose: "Enables capacity planning and velocity tracking",
+        description: 'Estimated effort in story points or hours',
+        businessPurpose: 'Enables capacity planning and velocity tracking',
         questionsItAnswers: [
-          "What is the planning estimate of the status section?", 
-          "How many story points is the task?"
+          'What is the planning estimate of the status section?',
+          'How many story points is the task?',
         ],
-        validationRules: ["Must be positive integer"],
-        examples: [1, 3, 5, 8, 13]
-      }
+        validationRules: ['Must be positive integer'],
+        examples: [1, 3, 5, 8, 13],
+      },
     },
-    
+
     implementationStartedOn: {
-      name: "implementationStartedOn",
-      label: "Implementation Started On",
+      name: 'implementationStartedOn',
+      label: 'Implementation Started On',
       graphql: {
         type: GRAPHQL_TYPES.DATETIME_OPTIONAL,
-        required: false
+        required: false,
       },
       zod: z.date().optional(),
       metadata: {
-        description: "When implementation began",
-        businessPurpose: "Tracks actual start time for velocity calculations",
+        description: 'When implementation began',
+        businessPurpose: 'Tracks actual start time for velocity calculations',
         questionsItAnswers: [
-          "What is the implementation started on date of the status section?", 
-          "When was the implementation started on?"
+          'What is the implementation started on date of the status section?',
+          'When was the implementation started on?',
         ],
-        validationRules: ["Must be a valid date"],
-        examples: ["2024-01-15T09:00:00Z"]
-      }
+        validationRules: ['Must be a valid date'],
+        examples: ['2024-01-15T09:00:00Z'],
+      },
     },
-    
+
     completedOn: {
-      name: "completedOn",
-      label: "Completed On",
+      name: 'completedOn',
+      label: 'Completed On',
       graphql: {
         type: GRAPHQL_TYPES.DATETIME_OPTIONAL,
-        required: false
+        required: false,
       },
       zod: z.date().optional(),
       metadata: {
-        description: "When task was completed",
-        businessPurpose: "Tracks completion time for velocity and cycle time analysis",
-        questionsItAnswers: ["What is the completed on date of the status section?", "When was the task completed?"],
-        validationRules: ["Must be a valid date"],
-        examples: ["2024-01-15T16:45:00Z"]
-      }
-    },
-    
-    family: {
-      name: "family",
-      label: "Family",
-      graphql: {
-        type: "_Family_1_MetaGovernance_",
-        required: true
+        description: 'When task was completed',
+        businessPurpose: 'Tracks completion time for velocity and cycle time analysis',
+        questionsItAnswers: ['What is the completed on date of the status section?', 'When was the task completed?'],
+        validationRules: ['Must be a valid date'],
+        examples: ['2024-01-15T16:45:00Z'],
       },
-      zod: z.string(),
-      metadata: {
-        description: "Reference to the parent family",
-        businessPurpose: "Establishes the relationship between section and family",
-        questionsItAnswers: ["What is the family of the status section?"],
-        validationRules: ["Must be a valid family reference"]
-      }
-    }
-  }
+    },
+
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_1_META_GOVERNANCE, SECTION_NAME),
+  },
 } as const;
 
 // =============================================================================
