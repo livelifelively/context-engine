@@ -1,15 +1,25 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import { GRAPHQL_TYPES } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 5.6: Integration Points
 export const SECTION_5_6_INTEGRATION_POINTS = '5.6' as const;
+export const SECTION_NAME = 'integration points' as const;
 
 export const section_5_6_integration_points = {
   id: SECTION_5_6_INTEGRATION_POINTS,
   name: 'Integration Points',
-  description: 'Documentation of target external system boundaries and integration points. This includes target external system boundaries analysis.',
+  description:
+    'Documentation of target external system boundaries and integration points. This includes target external system boundaries analysis.',
   interfaceName: '_Section_5_6_IntegrationPoints_',
-  businessPurpose: 'Define the target state of integration points to guide future external system connections and boundary design.',
+  businessPurpose:
+    'Define the target state of integration points to guide future external system connections and boundary design.',
   questionsItAnswers: [
     'What should be the target external system boundaries?',
     'How should the system integrate with external systems in the future?',
@@ -44,7 +54,8 @@ export const section_5_6_integration_points = {
       context: 'Target Cloud-Native Architecture',
       description: 'Target integration points in a cloud-native system',
       content: {
-        integrationPoints: 'Target cloud-native description of target integration points and external system connections',
+        integrationPoints:
+          'Target cloud-native description of target integration points and external system connections',
         externalSystems: 'Target cloud-native target external systems and their connection points',
         integrationPatterns: 'Target cloud-native target integration patterns and protocols to be used',
         systemBoundaries: 'Target cloud-native target system boundaries and integration constraints',
@@ -59,63 +70,11 @@ export const section_5_6_integration_points = {
     'Provide context for why target integration points decisions were made',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the integration points section',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the integration points section was created',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the integration points section was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     integrationPoints: {
       name: 'integrationPoints',
       label: 'Integration Points',
@@ -192,24 +151,6 @@ export const section_5_6_integration_points = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_5_TargetArchitecture_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent target architecture family',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_5_TARGET_ARCHITECTURE, SECTION_NAME),
   },
 } as const;

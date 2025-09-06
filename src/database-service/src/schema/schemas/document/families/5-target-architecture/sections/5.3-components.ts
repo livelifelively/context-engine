@@ -1,15 +1,25 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import { GRAPHQL_TYPES } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 5.3: Components
 export const SECTION_5_3_COMPONENTS = '5.3' as const;
+export const SECTION_NAME = 'components' as const;
 
 export const section_5_3_components = {
   id: SECTION_5_3_COMPONENTS,
   name: 'Components',
-  description: 'Documentation of the target system components, their responsibilities, and how they should be organized. This includes target component relationships analysis.',
+  description:
+    'Documentation of the target system components, their responsibilities, and how they should be organized. This includes target component relationships analysis.',
   interfaceName: '_Section_5_3_Components_',
-  businessPurpose: 'Define the target state of system components and their relationships to guide future system structure and component design.',
+  businessPurpose:
+    'Define the target state of system components and their relationships to guide future system structure and component design.',
   questionsItAnswers: [
     'What components should exist in the target system?',
     'How should components be organized and structured in the future?',
@@ -57,63 +67,11 @@ export const section_5_3_components = {
     'Provide context for why target components decisions were made',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the components section',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the components section was created',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the components section was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     components: {
       name: 'components',
       label: 'Components',
@@ -171,24 +129,6 @@ export const section_5_3_components = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_5_TargetArchitecture_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent target architecture family',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_5_TARGET_ARCHITECTURE, SECTION_NAME),
   },
 } as const;

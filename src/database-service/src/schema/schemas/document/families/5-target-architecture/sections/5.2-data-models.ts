@@ -1,15 +1,25 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import { GRAPHQL_TYPES } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 5.2: Data Models
 export const SECTION_5_2_DATA_MODELS = '5.2' as const;
+export const SECTION_NAME = 'data models' as const;
 
 export const section_5_2_data_models = {
   id: SECTION_5_2_DATA_MODELS,
   name: 'Data Models',
-  description: 'Documentation of the target data models, entity relationships, and database schema that should exist in the system. This includes target entity relationships analysis.',
+  description:
+    'Documentation of the target data models, entity relationships, and database schema that should exist in the system. This includes target entity relationships analysis.',
   interfaceName: '_Section_5_2_DataModels_',
-  businessPurpose: 'Define the target state of data models and entity relationships to guide future data structure design and database schema evolution.',
+  businessPurpose:
+    'Define the target state of data models and entity relationships to guide future data structure design and database schema evolution.',
   questionsItAnswers: [
     'What data models should exist in the target system?',
     'How should entities be related to each other in the future?',
@@ -57,63 +67,11 @@ export const section_5_2_data_models = {
     'Provide context for why target data models decisions were made',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the data models section',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the data models section was created',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the data models section was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     dataModels: {
       name: 'dataModels',
       label: 'Data Models',
@@ -171,24 +129,6 @@ export const section_5_2_data_models = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_5_TargetArchitecture_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent target architecture family',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_5_TARGET_ARCHITECTURE, SECTION_NAME),
   },
 } as const;

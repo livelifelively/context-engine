@@ -1,13 +1,22 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import { GRAPHQL_TYPES } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 5.6.2: Downstream Integrations
 export const SECTION_5_6_2_DOWNSTREAM_INTEGRATIONS = '5.6.2' as const;
+export const SECTION_NAME = 'downstream integrations' as const;
 
 export const section_5_6_2_downstream_integrations = {
   id: SECTION_5_6_2_DOWNSTREAM_INTEGRATIONS,
   name: 'Downstream Integrations',
-  description: 'Documentation of target systems that this scope should serve, including target systems this scope should serve analysis.',
+  description:
+    'Documentation of target systems that this scope should serve, including target systems this scope should serve analysis.',
   interfaceName: '_Section_5_6_2_DownstreamIntegrations_',
   businessPurpose: 'Define the target state of downstream integrations to guide future service and consumer design.',
   questionsItAnswers: [
@@ -59,63 +68,11 @@ export const section_5_6_2_downstream_integrations = {
     'Provide context for why target downstream integrations decisions were made',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the downstream integrations section',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the downstream integrations section was created',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the downstream integrations section was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     downstreamSystems: {
       name: 'downstreamSystems',
       label: 'Downstream Systems',
@@ -192,24 +149,6 @@ export const section_5_6_2_downstream_integrations = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_5_TargetArchitecture_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent target architecture family',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_5_TARGET_ARCHITECTURE, SECTION_NAME),
   },
 } as const;

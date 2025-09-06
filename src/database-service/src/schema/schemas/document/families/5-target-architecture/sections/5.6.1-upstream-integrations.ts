@@ -1,15 +1,25 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import { GRAPHQL_TYPES } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 5.6.1: Upstream Integrations
 export const SECTION_5_6_1_UPSTREAM_INTEGRATIONS = '5.6.1' as const;
+export const SECTION_NAME = 'upstream integrations' as const;
 
 export const section_5_6_1_upstream_integrations = {
   id: SECTION_5_6_1_UPSTREAM_INTEGRATIONS,
   name: 'Upstream Integrations',
-  description: 'Documentation of target systems that this scope should consume from, including target systems this scope should consume analysis.',
+  description:
+    'Documentation of target systems that this scope should consume from, including target systems this scope should consume analysis.',
   interfaceName: '_Section_5_6_1_UpstreamIntegrations_',
-  businessPurpose: 'Define the target state of upstream integrations to guide future data source and dependency design.',
+  businessPurpose:
+    'Define the target state of upstream integrations to guide future data source and dependency design.',
   questionsItAnswers: [
     'What systems should the target scope consume from?',
     'What should be the target upstream data sources?',
@@ -59,63 +69,11 @@ export const section_5_6_1_upstream_integrations = {
     'Provide context for why target upstream integrations decisions were made',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the upstream integrations section',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the upstream integrations section was created',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the upstream integrations section was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     upstreamSystems: {
       name: 'upstreamSystems',
       label: 'Upstream Systems',
@@ -192,24 +150,6 @@ export const section_5_6_1_upstream_integrations = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_5_TargetArchitecture_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent target architecture family',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_5_TARGET_ARCHITECTURE, SECTION_NAME),
   },
 } as const;

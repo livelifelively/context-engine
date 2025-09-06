@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import { GRAPHQL_TYPES } from '../../../constants.js';
 import {
   createIdField,
   createSectionCreatedOnField,
