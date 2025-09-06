@@ -1,8 +1,15 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 8.1: Implementation Plan
 export const SECTION_8_1_IMPLEMENTATION_PLAN = '8.1' as const;
+export const SECTION_NAME = 'implementation plan' as const;
 
 export const section_8_1_implementation_plan = {
   id: SECTION_8_1_IMPLEMENTATION_PLAN,
@@ -68,54 +75,11 @@ export const section_8_1_implementation_plan = {
     'Include rationale for implementation decisions and approaches',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the implementation plan section',
-        applicability: {
-          plan: 'required',
-          task: 'optional',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the implementation plan section was created',
-        applicability: {
-          plan: 'required',
-          task: 'optional',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the implementation plan section was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'optional',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     implementationSteps: {
       name: 'implementationSteps',
       label: 'Implementation Steps',
@@ -132,21 +96,6 @@ export const section_8_1_implementation_plan = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_8_ImplementationGuidance_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent implementation guidance family',
-        applicability: {
-          plan: 'required',
-          task: 'optional',
-        },
-      },
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_8_IMPLEMENTATION_GUIDANCE, SECTION_NAME),
   },
 } as const;
