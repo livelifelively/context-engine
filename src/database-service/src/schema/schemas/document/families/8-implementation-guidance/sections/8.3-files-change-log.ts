@@ -4,6 +4,8 @@ import {
   createIdField,
   createSectionCreatedOnField,
   createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
 } from '../../../field-factories.js';
 
 // Section 8.3: Files Change Log
@@ -84,21 +86,6 @@ export const section_8_3_files_change_log = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_8_ImplementationGuidance_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent implementation guidance family',
-        applicability: {
-          plan: 'omitted',
-          task: 'required',
-        },
-      },
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_8_IMPLEMENTATION_GUIDANCE, SECTION_NAME),
   },
 } as const;

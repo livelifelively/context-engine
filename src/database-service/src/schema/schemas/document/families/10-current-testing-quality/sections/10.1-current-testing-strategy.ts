@@ -1,8 +1,16 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import { GRAPHQL_TYPES } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 10.1: Current Testing Strategy
 export const SECTION_10_1_CURRENT_TESTING_STRATEGY = '10.1' as const;
+export const SECTION_NAME = 'current testing strategy' as const;
 
 export const section_10_1_current_testing_strategy = {
   id: SECTION_10_1_CURRENT_TESTING_STRATEGY,
@@ -61,54 +69,11 @@ export const section_10_1_current_testing_strategy = {
     'Include current testing constraints and limitations',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the current testing strategy section',
-        applicability: {
-          plan: 'optional',
-          task: 'required',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the current testing strategy section was created',
-        applicability: {
-          plan: 'optional',
-          task: 'required',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the current testing strategy section was last updated',
-        applicability: {
-          plan: 'optional',
-          task: 'required',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     currentStrategy: {
       name: 'currentStrategy',
       label: 'Current Strategy',
@@ -173,21 +138,6 @@ export const section_10_1_current_testing_strategy = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_10_CurrentTestingQuality_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent current testing & quality family',
-        applicability: {
-          plan: 'optional',
-          task: 'required',
-        },
-      },
-    },
+    family: createFamilyReferenceField(SECTION_NAME, FAMILY_INTERFACES.FAMILY_10_CURRENT_TESTING_QUALITY),
   },
 } as const;

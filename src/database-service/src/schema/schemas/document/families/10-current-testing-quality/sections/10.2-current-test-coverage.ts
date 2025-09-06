@@ -1,15 +1,25 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import { GRAPHQL_TYPES } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 10.2: Current Test Coverage
 export const SECTION_10_2_CURRENTTESTCOVERAGE = '10.2' as const;
+export const SECTION_NAME = 'current test coverage' as const;
 
 export const section_10_2_current_test_coverage = {
   id: SECTION_10_2_CURRENTTESTCOVERAGE,
   name: 'Current Test Coverage',
-  description: 'Documents the current test coverage metrics and status. Captures what test coverage is currently achieved.',
+  description:
+    'Documents the current test coverage metrics and status. Captures what test coverage is currently achieved.',
   interfaceName: '_Section_10_2_CurrentTestCoverage_',
-  businessPurpose: 'Document the current current test coverage to understand existing current test coverage and identify areas for improvement.',
+  businessPurpose:
+    'Document the current current test coverage to understand existing current test coverage and identify areas for improvement.',
   questionsItAnswers: [
     'What current test coverage is currently implemented?',
     'What are the current current test coverage measurements?',
@@ -37,7 +47,7 @@ export const section_10_2_current_test_coverage = {
         currentCoverage: 'Current test coverage metrics and percentages',
         coverageBreakdown: 'Breakdown of coverage by component and test type',
         coverageGaps: 'Current coverage gaps and areas with low coverage',
-        coverageTrends: 'Current coverage trends and historical data'
+        coverageTrends: 'Current coverage trends and historical data',
       },
     },
   ],
@@ -49,54 +59,11 @@ export const section_10_2_current_test_coverage = {
     'Include current current test coverage constraints and limitations',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the current test coverage section',
-        applicability: {
-          plan: 'optional',
-          task: 'required',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the current test coverage section was created',
-        applicability: {
-          plan: 'optional',
-          task: 'required',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the current test coverage section was last updated',
-        applicability: {
-          plan: 'optional',
-          task: 'required',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     currentCoverage: {
       name: 'currentCoverage',
       label: 'Current Coverage',
@@ -161,21 +128,6 @@ export const section_10_2_current_test_coverage = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_10_CurrentTestingQuality_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent current testing & quality family',
-        applicability: {
-          plan: 'optional',
-          task: 'required',
-        },
-      },
-    },
+    family: createFamilyReferenceField(SECTION_NAME, FAMILY_INTERFACES.FAMILY_10_CURRENT_TESTING_QUALITY),
   },
 } as const;

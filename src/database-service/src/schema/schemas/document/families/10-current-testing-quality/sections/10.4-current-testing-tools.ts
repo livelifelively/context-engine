@@ -1,15 +1,25 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import { GRAPHQL_TYPES } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 10.4: Current Testing Tools
 export const SECTION_10_4_CURRENTTESTINGTOOLS = '10.4' as const;
+export const SECTION_NAME = 'current testing tools' as const;
 
 export const section_10_4_current_testing_tools = {
   id: SECTION_10_4_CURRENTTESTINGTOOLS,
   name: 'Current Testing Tools',
-  description: 'Documents the current testing tools and infrastructure. Captures what testing tools are currently in place.',
+  description:
+    'Documents the current testing tools and infrastructure. Captures what testing tools are currently in place.',
   interfaceName: '_Section_10_4_CurrentTestingTools_',
-  businessPurpose: 'Document the current current testing tools to understand existing current testing tools and identify areas for improvement.',
+  businessPurpose:
+    'Document the current current testing tools to understand existing current testing tools and identify areas for improvement.',
   questionsItAnswers: [
     'What current testing tools is currently implemented?',
     'What are the current current testing tools measurements?',
@@ -37,7 +47,7 @@ export const section_10_4_current_testing_tools = {
         testingTools: 'Current testing tools and frameworks',
         infrastructure: 'Current testing infrastructure and setup',
         automation: 'Current test automation tools and capabilities',
-        limitations: 'Current tool limitations and constraints'
+        limitations: 'Current tool limitations and constraints',
       },
     },
   ],
@@ -49,54 +59,11 @@ export const section_10_4_current_testing_tools = {
     'Include current current testing tools constraints and limitations',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the current testing tools section',
-        applicability: {
-          plan: 'optional',
-          task: 'required',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the current testing tools section was created',
-        applicability: {
-          plan: 'optional',
-          task: 'required',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the current testing tools section was last updated',
-        applicability: {
-          plan: 'optional',
-          task: 'required',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     testingTools: {
       name: 'testingTools',
       label: 'Testing Tools',
@@ -161,21 +128,6 @@ export const section_10_4_current_testing_tools = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_10_CurrentTestingQuality_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent current testing & quality family',
-        applicability: {
-          plan: 'optional',
-          task: 'required',
-        },
-      },
-    },
+    family: createFamilyReferenceField(SECTION_NAME, FAMILY_INTERFACES.FAMILY_10_CURRENT_TESTING_QUALITY),
   },
 } as const;
