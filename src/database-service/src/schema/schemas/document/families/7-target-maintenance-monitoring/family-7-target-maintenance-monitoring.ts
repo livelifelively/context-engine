@@ -1,8 +1,13 @@
-import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../constants.js';
+import {
+  createFamilyIdField,
+  createFamilyCreatedOnField,
+  createFamilyLastUpdatedOnField,
+  createDocumentReferenceField,
+} from '../../field-factories.js';
 
 // Family 7: Target Maintenance & Monitoring
 export const FAMILY_7_TARGET_MAINTENANCE_MONITORING = '7-target-maintenance-monitoring' as const;
+export const FAMILY_NAME = 'target maintenance & monitoring' as const;
 
 export const family_7_target_maintenance_monitoring = {
   id: FAMILY_7_TARGET_MAINTENANCE_MONITORING,
@@ -64,81 +69,12 @@ export const family_7_target_maintenance_monitoring = {
     'Ensure target practices align with business objectives',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the target maintenance & monitoring family',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    familyCreatedOn: {
-      name: 'familyCreatedOn',
-      label: 'Family Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the target maintenance & monitoring family was created',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    familyLastUpdatedOn: {
-      name: 'familyLastUpdatedOn',
-      label: 'Family Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the target maintenance & monitoring family was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    document: {
-      name: 'document',
-      label: 'Document',
-      graphql: {
-        type: '_Document_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent document containing this target maintenance & monitoring family',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    id: createFamilyIdField(FAMILY_NAME),
+
+    familyCreatedOn: createFamilyCreatedOnField(FAMILY_NAME),
+
+    familyLastUpdatedOn: createFamilyLastUpdatedOnField(FAMILY_NAME),
+
+    document: createDocumentReferenceField(FAMILY_NAME),
   },
 } as const;

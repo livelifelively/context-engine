@@ -1,8 +1,16 @@
 import { z } from 'zod';
-import { GRAPHQL_TYPES, GRAPHQL_ENUMS } from '../../../constants.js';
+import { GRAPHQL_TYPES } from '../../../constants.js';
+import {
+  createIdField,
+  createSectionCreatedOnField,
+  createSectionLastUpdatedOnField,
+  createFamilyReferenceField,
+  FAMILY_INTERFACES,
+} from '../../../field-factories.js';
 
 // Section 7.2: Logging & Monitoring
 export const SECTION_7_2_LOGGING_MONITORING = '7.2' as const;
+export const SECTION_NAME = 'logging & monitoring' as const;
 
 export const section_7_2_logging_monitoring = {
   id: SECTION_7_2_LOGGING_MONITORING,
@@ -61,63 +69,11 @@ export const section_7_2_logging_monitoring = {
     'Provide context for why target observability decisions were made',
   ],
   fields: {
-    id: {
-      name: 'id',
-      label: 'ID',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().min(1),
-      metadata: {
-        description: 'Unique identifier for the logging & monitoring section',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    sectionCreatedOn: {
-      name: 'sectionCreatedOn',
-      label: 'Section Created On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the logging & monitoring section was created',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
-    sectionLastUpdatedOn: {
-      name: 'sectionLastUpdatedOn',
-      label: 'Section Last Updated On',
-      graphql: {
-        type: GRAPHQL_TYPES.STRING,
-        required: true,
-      },
-      zod: z.string().datetime(),
-      metadata: {
-        description: 'Timestamp when the logging & monitoring section was last updated',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    id: createIdField(SECTION_NAME),
+
+    sectionCreatedOn: createSectionCreatedOnField(SECTION_NAME),
+
+    sectionLastUpdatedOn: createSectionLastUpdatedOnField(SECTION_NAME),
     logging: {
       name: 'logging',
       label: 'Logging',
@@ -194,24 +150,6 @@ export const section_7_2_logging_monitoring = {
         },
       },
     },
-    family: {
-      name: 'family',
-      label: 'Family',
-      graphql: {
-        type: '_Family_7_TargetMaintenanceMonitoring_',
-        required: true,
-      },
-      zod: z.object({}).passthrough(),
-      metadata: {
-        description: 'Reference to the parent target maintenance & monitoring family',
-        applicability: {
-          plan: 'required',
-          task: 'required',
-          project: 'required',
-          module: 'required',
-          feature: 'required',
-        },
-      },
-    },
+    family: createFamilyReferenceField(FAMILY_INTERFACES.FAMILY_7_TARGET_MAINTENANCE_MONITORING, SECTION_NAME),
   },
 } as const;
